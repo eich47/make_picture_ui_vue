@@ -8,11 +8,17 @@ function ready() {
   Vue.component('form-root', {
     template: `
       <form>
-      
+      <!--размеры картинки-->
         <form-element
             class="dimension"
             v-bind:title="'Задайте ширину и высоту картинки'"
             v-bind:components="dimension"></form-element>
+            
+       <!--цвет картинки-->
+       <form-element
+            class="color"
+            v-bind:title="'Выберите цвет'"
+            v-bind:components="color"></form-element>
       </form>
     `,
     data: function () {
@@ -25,6 +31,12 @@ function ready() {
           {
             name: 'form-element-number',
             label: 'высота'
+          },
+        ],
+        'color': [
+          {
+            name: 'form-element-color',
+            label: 'Цвет'
           },
         ]
       }
