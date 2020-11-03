@@ -33,6 +33,13 @@ function ready() {
             v-bind:components="extension"
        ></form-element>
        
+       <!--добавлять или нет текстуру-->
+       <form-element
+            class="texture"
+            v-bind:title="'Добавление текстуры'"
+            v-bind:components="texture"
+       ></form-element>
+       
        
       </form>
     `,
@@ -64,6 +71,12 @@ function ready() {
           {
             name: 'form-element-radio',
             label: 'Тип файла'
+          }
+        ],
+        'texture': [
+          {
+            name: 'form-element-checkbox',
+            label: 'Текстура'
           }
         ],
       }
@@ -178,6 +191,25 @@ function ready() {
               </div>
           </div>
         </div>
+    `
+  })
+  
+  
+  /**
+   * checkbox
+   */
+  Vue.component('form-element-checkbox', {
+    props: ['label'],
+    template: `
+      <div class="form-group row">
+        <label class="col-sm-2 col-md-3 ">{{label}}</label>
+        <div class="col-sm-10 col-md-9">
+          <div class="custom-control custom-checkbox">
+              <input type="checkbox" name="user_texture" class="custom-control-input" id="texture">
+              <label for="texture" class="custom-control-label">добавить</label>
+          </div>
+        </div>
+      </div>
     `
   })
   
