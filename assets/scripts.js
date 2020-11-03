@@ -12,7 +12,9 @@ function ready() {
         <form-element
             class="dimension"
             v-bind:title="'Задайте ширину и высоту картинки'"
-            v-bind:components="dimension"></form-element>
+            v-bind:components="dimension"
+            v-on:user-size="Object.assign(pictureOptions, $event)"
+            ></form-element>
             
        <!--цвет картинки-->
        <form-element
@@ -49,11 +51,13 @@ function ready() {
         'dimension': [
           {
             name: 'form-element-number',
-            label: 'ширина'
+            label: 'ширина',
+            inputName: 'width'
           },
           {
             name: 'form-element-number',
-            label: 'высота'
+            label: 'высота',
+            inputName: 'height'
           },
         ],
         'color': [
@@ -80,6 +84,12 @@ function ready() {
             label: 'Текстура'
           }
         ],
+        //параметры которые нужны для отправки запроса к апи, получаем из формы
+        pictureOptions: {
+          width: 0,
+          height: 0,
+          
+        }
       }
     }
   });
@@ -93,12 +103,20 @@ function ready() {
       'title',
       'components'
     ],
+    methods: {
+      inputSizeUser: function (size) {
+        //пробрасываем событие и данные дальше вверх
+        this.$emit('user-size', size)
+      }
+    },
     template: `
       <div>
         <h2 class="h6" >{{title}}</h2>
         
         <template v-for="c in components">
-            <component v-bind:is="c.name" v-bind:label="c.label"></component>
+            <component v-bind:is="c.name" v-bind:label="c.label"
+             v-on:user-size="inputSizeUser"
+             v-bind:input-name="c.inputName"></component>
         </template>
         
       </div>
@@ -110,19 +128,49 @@ function ready() {
    * input type number
    */
   Vue.component('form-element-number', {
-    props: ['label'],
+    props: ['label', 'inputName'],
     data: function(){
       return {
-        'label_id': (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
+        'label_id': (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0),
+        isCorrectNumber: true,
+        isNumberToMuch: false,
+        maxSize: 5000 //максимальный размер вводимого значения
+      }
+    },
+    methods: {
+      inputEvent: function (event) {
+        //устнавливаем значения по умолчанию, чтобы сбросить ошибки
+        this.isCorrectNumber = true
+        this.isNumberToMuch = false
+        
+        let inputUser = event.target.value;
+        let digital = Number(inputUser)
+        
+        if(digital <= 0){
+          this.isCorrectNumber = false
+          return
+        }
+        if(digital > this.maxSize){
+          this.isNumberToMuch = true
+          return
+        }
+        //передаем родительскому компоненту введенное число и название ключа к которому относится число
+        this.$emit('user-size', {[this.inputName] :digital})
       }
     },
     template: `
         <div class="form-group row">
             <label v-bind:for="label_id" class="col-sm-2 col-md-3 col-form-label">{{label}}</label>
             <div class="col-sm-10 col-md-9">
-                <input type="number" class="form-control" name="user_width" v-bind:id="label_id">
+                <input type="number" class="form-control"
+                v-bind:name="inputName"
+                v-bind:id="label_id"
+                v-on:input="inputEvent"
+                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}]"
+                >
+                <div class="invalid-feedback" v-if="!isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
+                <div class="invalid-feedback" v-if="isNumberToMuch">Максимальный размер {{maxSize}} px</div>
             </div>
-            
         </div>
     `
   });
