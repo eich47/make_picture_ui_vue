@@ -63,6 +63,26 @@ function ready() {
   
   
   /**
+   * input type color
+   */
+  Vue.component('form-element-color', {
+    props: ['label'],
+    data: function () {
+      return {
+        labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
+      }
+    },
+    template: `
+      <div class="form-group row">
+          <label v-bind:for="labelId" class="col-sm-2 col-md-3 col-form-label">{{ label }}</label>
+          <div class="col-sm-10 col-md-9">
+              <input type="color" class="form-control" name="user_color" v-bind:id="labelId">
+          </div>
+      </div>
+    `
+  })
+  
+  /**
    * vue
    */
   let app = new Vue({
