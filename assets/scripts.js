@@ -11,10 +11,24 @@ function ready() {
       
         <form-element
             class="dimension"
-            v-bind:title="'Задайте ширину и высоту картинки'"></form-element>
-            
+            v-bind:title="'Задайте ширину и высоту картинки'"
+            v-bind:components="dimension"></form-element>
       </form>
-    `
+    `,
+    data: function () {
+      return {
+        'dimension': [
+          {
+            name: 'form-element-number',
+            label: 'ширина'
+          },
+          {
+            name: 'form-element-number',
+            label: 'высота'
+          },
+        ]
+      }
+    }
   });
   
   
@@ -24,17 +38,16 @@ function ready() {
   Vue.component('form-element', {
     props: [
       'title',
+      'components'
     ],
     template: `
       <div>
         <h2 class="h6" >{{title}}</h2>
         
-        <form-element-number
-            v-bind:label="'ширина'"></form-element-number>
-            
-        <form-element-number
-            v-bind:label="'высота'"></form-element-number>
-            
+        <template v-for="c in components">
+            <component v-bind:is="c.name" v-bind:label="c.label"></component>
+        </template>
+        
       </div>
     `
   });
