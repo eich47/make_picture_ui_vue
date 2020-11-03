@@ -40,7 +40,8 @@ function ready() {
             v-bind:components="texture"
        ></form-element>
        
-       
+       <!--submit button-->
+       <form-element-submit></form-element-submit>
       </form>
     `,
     data: function () {
@@ -213,6 +214,18 @@ function ready() {
     `
   })
   
+  /**
+   * submit button
+   */
+  Vue.component('form-element-submit', {
+    template: `
+      <div class="form-group row">
+          <div class="col-sm-10 col-md-9 ml-auto">
+              <input type="submit" class="form-control bg-light" value="Получить картинку">
+          </div>
+      </div>
+    `
+  })
   
   /**
    * vue
