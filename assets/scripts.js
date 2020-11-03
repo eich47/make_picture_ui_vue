@@ -19,6 +19,15 @@ function ready() {
             class="color"
             v-bind:title="'Выберите цвет'"
             v-bind:components="color"></form-element>
+            
+       <!--текст на картике-->
+       <form-element
+            class="text"
+            v-bind:title="'Текст'"
+            v-bind:components="text"></form-element>
+            
+            
+            
       </form>
     `,
     data: function () {
@@ -38,6 +47,12 @@ function ready() {
             name: 'form-element-color',
             label: 'Цвет'
           },
+        ],
+        'text': [
+          {
+            name: 'form-element-text',
+            label: 'Введите текст'
+          }
         ]
       }
     }
@@ -106,6 +121,29 @@ function ready() {
       </div>
     `
   })
+  
+  
+  /**
+   * input type text
+   */
+  Vue.component('form-element-text',{
+    props: ['label'],
+    data: function () {
+      return {
+        labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
+      }
+    },
+    template: `
+      <div class="form-group row">
+          <label v-bind:for="labelId" class="col-sm-2 col-md-3 col-form-label">{{ label }}</label>
+          <div class="col-sm-10 col-md-9">
+              <input type="text" class="form-control" name="user_color" v-bind:id="labelId">
+          </div>
+      </div>
+    `
+  })
+  
+  
   
   /**
    * vue
