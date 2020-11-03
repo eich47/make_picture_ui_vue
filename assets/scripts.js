@@ -26,8 +26,14 @@ function ready() {
             v-bind:title="'Текст'"
             v-bind:components="text"></form-element>
             
-            
-            
+       <!--выбор расширения для файла-->
+       <form-element
+            class="extension"
+            v-bind:title="'Выберите расширение файла'"
+            v-bind:components="extension"
+       ></form-element>
+       
+       
       </form>
     `,
     data: function () {
@@ -53,7 +59,13 @@ function ready() {
             name: 'form-element-text',
             label: 'Введите текст'
           }
-        ]
+        ],
+        'extension': [
+          {
+            name: 'form-element-radio',
+            label: 'Тип файла'
+          }
+        ],
       }
     }
   });
@@ -143,6 +155,31 @@ function ready() {
     `
   })
   
+  /**
+   * radio button
+   */
+  Vue.component('form-element-radio',{
+    props: ['label'],
+    template: `
+        <div class="form-group row">
+          <label class="col-sm-2 col-md-3">{{label}}</label>
+          <div class="col-sm-10 col-md-9">
+              <div class="custom-control custom-radio">
+                  <input type="radio" checked name="customRadio" class="custom-control-input" id="radiojpg">
+                  <label class="custom-control-label" for="radiojpg">jpg</label>
+              </div>
+              <div class="custom-control custom-radio">
+                  <input type="radio" name="customRadio" class="custom-control-input" id="radiogif">
+                  <label class="custom-control-label" for="radiogif">gif</label>
+              </div>
+              <div class="custom-control custom-radio">
+                  <input type="radio" name="customRadio" class="custom-control-input" id="radiopng">
+                  <label class="custom-control-label" for="radiopng">png</label>
+              </div>
+          </div>
+        </div>
+    `
+  })
   
   
   /**
