@@ -27,7 +27,8 @@ function ready() {
        <form-element
             class="text"
             v-bind:title="'Текст'"
-            v-bind:components="text"></form-element>
+            v-bind:components="text"
+            v-on:user-data="addDataForPictureOptions"></form-element>
             
        <!--выбор расширения для файла-->
        <form-element
@@ -89,7 +90,8 @@ function ready() {
         pictureOptions: {
           width: 0,
           height: 0,
-          user_color: ''
+          user_color: '',
+          user_text: ''
           
         }
       }
@@ -223,11 +225,20 @@ function ready() {
         labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
       }
     },
+    methods: {
+      inputTextForPicture: function (event) {
+        let text = event.target.value
+        let textObj = {user_text : text}
+        this.$emit('user-data', textObj)
+      }
+    },
     template: `
       <div class="form-group row">
           <label v-bind:for="labelId" class="col-sm-2 col-md-3 col-form-label">{{ label }}</label>
           <div class="col-sm-10 col-md-9">
-              <input type="text" class="form-control" name="user_color" v-bind:id="labelId">
+              <input type="text" class="form-control" name="user_text"
+              v-bind:id="labelId"
+              v-on:input="inputTextForPicture">
           </div>
       </div>
     `
