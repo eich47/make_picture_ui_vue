@@ -7,7 +7,7 @@ function ready() {
    */
   Vue.component('form-root', {
     template: `
-      <form>
+      <form v-on:submit.prevent="onSubmit">
       <!--размеры картинки-->
         <form-element
             class="dimension"
@@ -103,6 +103,89 @@ function ready() {
     methods: {
       addDataForPictureOptions: function (dataFromUser) {
         Object.assign(this.pictureOptions, dataFromUser)
+      },
+      onSubmit: function () {
+        // http://satyr.io/80x60
+        //color
+        // http://satyr.io/80x60/c0ffee
+        //text
+        //http://satyr.io/105x60?text=hello+world
+        //type
+        // http://satyr.io/80x60?type=jpg
+        // texture
+        // http://satyr.io/80x60?texture=cross
+        
+        // http://satyr.io/800x700/pink/?text=hello+world&type=jpg&texture=cross
+        
+        let paramsUrl = this.buildParamsForUrl()
+        const baseUrl = 'http://satyr.io'
+        let url = this.buildUrl(baseUrl, paramsUrl)
+        console.log(url)
+
+      },
+      getDimension: function ( {width, height}) {
+        return `${width}x${height}`
+      },
+      getColor: function ( {user_color} ) {
+        let color = false;
+        //если пользователей выбрал цвет (например #000080)
+        if( user_color.length === 7){
+          color = user_color.slice(1)
+        }
+        return color
+      },
+      getText: function ({user_text}) {
+        if( user_text === ''){
+          return false
+        }
+        return user_text
+      },
+      getExtension: function ({extension}) {
+        if (extension === ''){
+          return false
+        }
+        
+        return extension
+      },
+      getTexture: function ({texture}) {
+        return texture
+      },
+      buildParamsForUrl: function () {
+        let params = {}
+        
+        let dimension = this.getDimension(this.pictureOptions)
+        params.widthAndHeight = dimension
+        
+        let color = this.getColor(this.pictureOptions)
+        params.color = ( color === false ) ? '' : color
+        
+        let text = this.getText(this.pictureOptions)
+        params.text = ( text === false ) ? false : text
+        
+        let extension = this.getExtension(this.pictureOptions)
+        params.type = ( extension === false ) ? false : extension
+        
+        let texture = this.getTexture(this.pictureOptions)
+        params.texture = ( texture === false ) ? false : 'cross'
+        
+        return params
+      },
+      //построим урл по которому будем делать запрос к апи
+      buildUrl: function (baseUrl, paramsForUrl) {
+        let {widthAndHeight, color, ...optionalParam } = paramsForUrl
+        let pathName = `/${widthAndHeight}/${color}`
+        let urlString = `${baseUrl}${pathName}`
+        
+        let url = new URL(urlString)
+        
+        for( let key in optionalParam){
+          let value = optionalParam[key]
+          if (value !== false ){
+            url.searchParams.set(key, value )
+          }
+        }
+        
+        return url
       }
     }
   });
