@@ -35,6 +35,7 @@ function ready() {
             class="extension"
             v-bind:title="'Выберите расширение файла'"
             v-bind:components="extension"
+            v-on:user-data="addDataForPictureOptions"
        ></form-element>
        
        <!--добавлять или нет текстуру-->
@@ -91,7 +92,8 @@ function ready() {
           width: 0,
           height: 0,
           user_color: '',
-          user_text: ''
+          user_text: '',
+          extension: '',
           
         }
       }
@@ -249,20 +251,47 @@ function ready() {
    */
   Vue.component('form-element-radio',{
     props: ['label'],
+    data: function() {
+      return {
+        picked: []
+      }
+    },
+    watch:{
+      picked: function () {
+        let extensionObj = {extension: this.picked}
+        return this.$emit('user-data', extensionObj)
+        
+      }
+    },
     template: `
         <div class="form-group row">
           <label class="col-sm-2 col-md-3">{{label}}</label>
           <div class="col-sm-10 col-md-9">
               <div class="custom-control custom-radio">
-                  <input type="radio" checked name="customRadio" class="custom-control-input" id="radiojpg">
+                  <input type="radio" checked
+                  name="customRadio"
+                  class="custom-control-input"
+                  id="radiojpg"
+                  value="jpg"
+                  v-model="picked">
                   <label class="custom-control-label" for="radiojpg">jpg</label>
               </div>
               <div class="custom-control custom-radio">
-                  <input type="radio" name="customRadio" class="custom-control-input" id="radiogif">
+                  <input type="radio"
+                  name="customRadio"
+                  class="custom-control-input"
+                  id="radiogif"
+                  value="gif"
+                  v-model="picked">
                   <label class="custom-control-label" for="radiogif">gif</label>
               </div>
               <div class="custom-control custom-radio">
-                  <input type="radio" name="customRadio" class="custom-control-input" id="radiopng">
+                  <input type="radio"
+                  name="customRadio"
+                  class="custom-control-input"
+                  id="radiopng"
+                  value="png"
+                  v-model="picked">
                   <label class="custom-control-label" for="radiopng">png</label>
               </div>
           </div>
