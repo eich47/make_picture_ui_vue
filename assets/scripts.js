@@ -94,7 +94,7 @@ function ready() {
           height: 0,
           user_color: '#c0c0c0',
           user_text: '',
-          extension: '',
+          extension: 'jpg',
           texture: false,
           
         }
@@ -340,7 +340,7 @@ function ready() {
     props: ['label'],
     data: function() {
       return {
-        picked: '',
+        picked: 'jpg',
       }
     },
     watch:{
