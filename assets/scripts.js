@@ -13,7 +13,7 @@ function ready() {
             class="dimension"
             v-bind:title="'Задайте ширину и высоту картинки'"
             v-bind:components="dimension"
-            v-on:user-size="Object.assign(pictureOptions, $event)"
+            v-on:user-data="addDataForPictureOptions"
             ></form-element>
             
        <!--цвет картинки-->
@@ -21,7 +21,7 @@ function ready() {
             class="color"
             v-bind:title="'Выберите цвет'"
             v-bind:components="color"
-            v-on:user-size="addDataForPictureOptions"></form-element>
+            v-on:user-data="addDataForPictureOptions"></form-element>
             
        <!--текст на картике-->
        <form-element
@@ -111,9 +111,9 @@ function ready() {
       'components'
     ],
     methods: {
-      inputSizeUser: function (size) {
+      inputDataUser: function (data) {
         //пробрасываем событие и данные дальше вверх
-        this.$emit('user-size', size)
+        this.$emit('user-data', data)
       }
     },
     template: `
@@ -122,7 +122,7 @@ function ready() {
         
         <template v-for="c in components">
             <component v-bind:is="c.name" v-bind:label="c.label"
-             v-on:user-size="inputSizeUser"
+             v-on:user-data="inputDataUser"
              v-bind:input-name="c.inputName"></component>
         </template>
         
@@ -162,7 +162,7 @@ function ready() {
           return
         }
         //передаем родительскому компоненту введенное число и название ключа к которому относится число
-        this.$emit('user-size', {[this.inputName] :digital})
+        this.$emit('user-data', {[this.inputName] :digital})
       }
     },
     template: `
@@ -197,7 +197,7 @@ function ready() {
       selectColor: function (event) {
         let hexColor = event.target.value
         let hexColorObj = {user_color: hexColor}
-        this.$emit('user-size', hexColorObj)
+        this.$emit('user-data', hexColorObj)
       }
     },
     template: `
