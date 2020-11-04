@@ -20,7 +20,8 @@ function ready() {
        <form-element
             class="color"
             v-bind:title="'Выберите цвет'"
-            v-bind:components="color"></form-element>
+            v-bind:components="color"
+            v-on:user-size="addDataForPictureOptions"></form-element>
             
        <!--текст на картике-->
        <form-element
@@ -88,8 +89,14 @@ function ready() {
         pictureOptions: {
           width: 0,
           height: 0,
+          user_color: ''
           
         }
+      }
+    },
+    methods: {
+      addDataForPictureOptions: function (dataFromUser) {
+        Object.assign(this.pictureOptions, dataFromUser)
       }
     }
   });
@@ -186,11 +193,20 @@ function ready() {
         labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
       }
     },
+    methods: {
+      selectColor: function (event) {
+        let hexColor = event.target.value
+        let hexColorObj = {user_color: hexColor}
+        this.$emit('user-size', hexColorObj)
+      }
+    },
     template: `
       <div class="form-group row">
           <label v-bind:for="labelId" class="col-sm-2 col-md-3 col-form-label">{{ label }}</label>
           <div class="col-sm-10 col-md-9">
-              <input type="color" class="form-control" name="user_color" v-bind:id="labelId">
+              <input type="color" class="form-control" name="user_color"
+              v-bind:id="labelId"
+              v-on:input="selectColor">
           </div>
       </div>
     `
