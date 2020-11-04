@@ -43,6 +43,7 @@ function ready() {
             class="texture"
             v-bind:title="'Добавление текстуры'"
             v-bind:components="texture"
+            v-on:user-data="addDataForPictureOptions"
        ></form-element>
        
        <!--submit button-->
@@ -94,6 +95,7 @@ function ready() {
           user_color: '',
           user_text: '',
           extension: '',
+          texture: false,
           
         }
       }
@@ -305,6 +307,16 @@ function ready() {
    */
   Vue.component('form-element-checkbox', {
     props: ['label'],
+    data: function(){
+      return {
+        checked: false
+      }
+    },
+    watch: {
+      checked: function () {
+        return this.$emit('user-data', {texture: this.checked})
+      }
+    },
     template: `
       <div class="form-group row">
         <label class="col-sm-2 col-md-3 ">{{label}}</label>
@@ -313,7 +325,9 @@ function ready() {
               <input type="checkbox"
               name="user_texture"
               class="custom-control-input"
-              id="texture">
+              id="texture"
+              v-model="checked"
+              >
               <label for="texture" class="custom-control-label">добавить</label>
           </div>
         </div>
