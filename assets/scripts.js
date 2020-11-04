@@ -253,7 +253,7 @@ function ready() {
     props: ['label'],
     data: function() {
       return {
-        picked: []
+        picked: '',
       }
     },
     watch:{
@@ -268,7 +268,7 @@ function ready() {
           <label class="col-sm-2 col-md-3">{{label}}</label>
           <div class="col-sm-10 col-md-9">
               <div class="custom-control custom-radio">
-                  <input type="radio" checked
+                  <input type="radio"
                   name="customRadio"
                   class="custom-control-input"
                   id="radiojpg"
