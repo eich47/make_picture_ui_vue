@@ -92,7 +92,7 @@ function ready() {
         pictureOptions: {
           width: 0,
           height: 0,
-          user_color: '',
+          user_color: '#c0c0c0',
           user_text: '',
           extension: '',
           texture: false,
@@ -295,7 +295,9 @@ function ready() {
           <div class="col-sm-10 col-md-9">
               <input type="color" class="form-control" name="user_color"
               v-bind:id="labelId"
-              v-on:input="selectColor">
+              v-on:input="selectColor"
+              value="#c0c0c0"
+              >
           </div>
       </div>
     `
