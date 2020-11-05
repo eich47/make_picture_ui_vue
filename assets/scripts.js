@@ -492,14 +492,16 @@ function ready() {
       }
     },
     template: `
-      <div class="media">
+      <div>
         <info v-if="!isParams"></info>
         <template v-if="isParams">
+        <div>
           <img v-bind:src="url"
               class="mr-3 img-fluid"
               v-bind:alt="url"
           >
-          <div>
+        </div>
+          <div class="mt-3">
             <p>Чтобы сохранить картинку, нажмите на ней правой кнопкой мыши и выберите подходящий пункт меню.</p>
             <p>Вы также можете открыть картинку в новой вкладке кликнув по ссылке
               <a href="#"
