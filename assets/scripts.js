@@ -219,7 +219,7 @@ function ready() {
     },
     template: `
       <div>
-        <h2 class="h6" >{{title}}</h2>
+        <h2 class="h6 font-weight-bold" >{{title}}</h2>
         
         <template v-for="c in components">
             <component v-bind:is="c.name" v-bind:label="c.label"
