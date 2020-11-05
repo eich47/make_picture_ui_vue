@@ -462,7 +462,8 @@ function ready() {
       }
     },
     template: `
-      <div class="container">
+      <div class="container mt-3">
+          <h1 class="h3 text-center mb-3">Создание картинки по параметрам</h1>
           <div class="row">
               <div class="col-md-5 bg-info">
                   <form-root
