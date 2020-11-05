@@ -97,7 +97,9 @@ function ready() {
           extension: 'jpg',
           texture: false,
           
-        }
+        },
+        oldUrl: null,
+        currentUrl: null
       }
     },
     methods: {
@@ -120,8 +122,17 @@ function ready() {
         let paramsUrl = this.buildParamsForUrl()
         const baseUrl = 'http://satyr.io'
         let url = this.buildUrl(baseUrl, paramsUrl)
-        console.log(url)
-        this.$emit('url-ready', url)
+        this.currentUrl = url
+        //чтобы не обращаться к апи если параметры картинки не были изменены
+        if( String(this.currentUrl) !== String(this.oldUrl) ){
+          console.log(url)
+          this.oldUrl = this.currentUrl
+          this.$emit('url-ready', this.currentUrl)
+        } else {
+          console.log('url остался прежним!!!')
+        }
+        
+        
 
       },
       getDimension: function ( {width, height}) {
