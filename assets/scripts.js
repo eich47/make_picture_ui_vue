@@ -56,12 +56,15 @@ function ready() {
           {
             name: 'form-element-number',
             label: 'ширина',
-            inputName: 'width'
+            inputName: 'width',
+            isCorrect: true //если при отправке формы будут не корректные значения, то изменим на false
+            //Изменное значение (false) будет передано в дочерний компонент и изменит его состояние
           },
           {
             name: 'form-element-number',
             label: 'высота',
-            inputName: 'height'
+            inputName: 'height',
+            isCorrect: true,
           },
         ],
         'color': [
@@ -90,8 +93,8 @@ function ready() {
         ],
         //параметры которые нужны для отправки запроса к апи, получаем из формы
         pictureOptions: {
-          width: 100,
-          height: 100,
+          width: 0,
+          height: 0,
           user_color: '#c0c0c0',
           user_text: '',
           extension: 'jpg',
@@ -120,6 +123,11 @@ function ready() {
         // http://satyr.io/800x700/pink/?text=hello+world&type=jpg&texture=cross
         
         let paramsUrl = this.buildParamsForUrl()
+        //если не удалось получить корректные обязательные параметры
+        if (paramsUrl === false){
+          return
+        }
+        
         const baseUrl = 'http://satyr.io'
         let url = this.buildUrl(baseUrl, paramsUrl)
         this.currentUrl = url
@@ -136,6 +144,19 @@ function ready() {
 
       },
       getDimension: function ( {width, height}) {
+        //устанавливаем isCorrect в false чтобы известить дочерний компонент
+        //что его значения не корректные
+        if(width === 0){
+          this.dimension[0].isCorrect = false
+        }
+        if(height === 0){
+          this.dimension[1].isCorrect = false
+        }
+        
+        if (width === 0 || height === 0){
+          return false
+        }
+        
         return `${width}x${height}`
       },
       getColor: function ( {user_color} ) {
@@ -166,6 +187,11 @@ function ready() {
         let params = {}
         
         let dimension = this.getDimension(this.pictureOptions)
+        //так как ширина и высота обязательные атрибуты то они должны быть корректные,
+        //иначе урл к апи будет не правильным
+        if ( dimension === false){
+          return false
+        }
         params.widthAndHeight = dimension
         
         let color = this.getColor(this.pictureOptions)
@@ -224,7 +250,9 @@ function ready() {
         <template v-for="c in components">
             <component v-bind:is="c.name" v-bind:label="c.label"
              v-on:user-data="inputDataUser"
-             v-bind:input-name="c.inputName"></component>
+             v-bind:input-name="c.inputName"
+             v-bind:is-correct="c.isCorrect"
+             ></component>
         </template>
         
       </div>
@@ -236,13 +264,15 @@ function ready() {
    * input type number
    */
   Vue.component('form-element-number', {
-    props: ['label', 'inputName'],
+    props: ['label', 'inputName', 'isCorrect'],
     data: function(){
       return {
         'label_id': (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0),
         isCorrectNumber: true,
         isNumberToMuch: false,
-        maxSize: 5000 //максимальный размер вводимого значения
+        maxSize: 5000, //максимальный размер вводимого значения
+        isCorrectData: true, //т.к. нельзя изменять props то запишем их значение в data
+        
       }
     },
     methods: {
@@ -250,6 +280,7 @@ function ready() {
         //устнавливаем значения по умолчанию, чтобы сбросить ошибки
         this.isCorrectNumber = true
         this.isNumberToMuch = false
+        this.isCorrectData = true
         
         let inputUser = event.target.value;
         let digital = Number(inputUser)
@@ -264,6 +295,12 @@ function ready() {
         }
         //передаем родительскому компоненту введенное число и название ключа к которому относится число
         this.$emit('user-data', {[this.inputName] :digital})
+      },
+    },
+    watch:{
+      isCorrect: function () {
+        console.log('isCorrectData ' + this.isCorrect);
+        return this.isCorrectData = this.isCorrect
       }
     },
     template: `
@@ -274,10 +311,9 @@ function ready() {
                 v-bind:name="inputName"
                 v-bind:id="label_id"
                 v-on:input="inputEvent"
-                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}]"
-                value="100"
+                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}, {'is-invalid' : !isCorrectData}]"
                 >
-                <div class="invalid-feedback" v-if="!isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
+                <div class="invalid-feedback" v-if="!isCorrectData || !isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
                 <div class="invalid-feedback" v-if="isNumberToMuch">Максимальный размер {{maxSize}} px</div>
             </div>
         </div>
