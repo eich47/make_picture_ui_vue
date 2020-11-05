@@ -465,12 +465,12 @@ function ready() {
       <div class="container mt-3">
           <h1 class="h3 text-center mb-3">Создание картинки по параметрам</h1>
           <div class="row">
-              <div class="col-md-5 bg-info">
+              <div class="col-md-5">
                   <form-root
                     v-on:url-ready="onUrlReady"
                   ></form-root>
               </div>
-              <div class="col bg-light">
+              <div class="col">
                 <block-image
                     v-bind:url="url"
                 ></block-image>
