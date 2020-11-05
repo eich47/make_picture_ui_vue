@@ -90,8 +90,8 @@ function ready() {
         ],
         //параметры которые нужны для отправки запроса к апи, получаем из формы
         pictureOptions: {
-          width: 0,
-          height: 0,
+          width: 100,
+          height: 100,
           user_color: '#c0c0c0',
           user_text: '',
           extension: 'jpg',
@@ -264,6 +264,7 @@ function ready() {
                 v-bind:id="label_id"
                 v-on:input="inputEvent"
                 v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}]"
+                value="100"
                 >
                 <div class="invalid-feedback" v-if="!isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
                 <div class="invalid-feedback" v-if="isNumberToMuch">Максимальный размер {{maxSize}} px</div>
