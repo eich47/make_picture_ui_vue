@@ -438,9 +438,15 @@ function ready() {
    * общий компонент для всего приложения
    */
   Vue.component('root-component', {
+    data: function(){
+      return {
+        url: null
+      }
+    },
     methods: {
       onUrlReady: function (url) {
         console.log(`url = ${url}`);
+        this.url = url
       }
     },
     template: `
@@ -452,13 +458,55 @@ function ready() {
                   ></form-root>
               </div>
               <div class="col bg-light">
-      
+                <block-image
+                    v-bind:url="url"
+                ></block-image>
               </div>
           </div>
       </div>
     `
   })
   
+  /**
+   * Блок для картинки загруженной по апи
+   */
+  Vue.component('block-image', {
+    props: ['url'],
+    computed: {
+      isParams: function () {
+        if ( this.url === null){
+          return false
+        }
+        return true
+      }
+    },
+    template: `
+      <div class="media">
+        <info v-if="!isParams"></info>
+        <template v-if="isParams">
+          <img v-bind:src="url"
+              class="mr-3 img-fluid"
+              v-bind:alt="url"
+          >
+          <div class="media-body">
+              <button type="button" class="btn btn-info">Скачать</button>
+          </div>
+        </template>
+      </div>
+    
+    `
+  })
+  
+  /**
+   * Сообщение при загруке страницы
+   */
+  Vue.component('info', {
+    template: `
+      <div>
+        Выберите параметры и нажмите на кнопку "получить картинку"
+      </div>
+    `
+  })
   
   /**
    * vue
