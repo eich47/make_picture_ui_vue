@@ -434,6 +434,25 @@ function ready() {
   })
   
   /**
+   * общий компонент для всего приложения
+   */
+  Vue.component('root-component', {
+    template: `
+      <div class="container">
+          <div class="row">
+              <div class="col-md-5 bg-info">
+                  <form-root></form-root>
+              </div>
+              <div class="col bg-light">
+      
+              </div>
+          </div>
+      </div>
+    `
+  })
+  
+  
+  /**
    * vue
    */
   let app = new Vue({
