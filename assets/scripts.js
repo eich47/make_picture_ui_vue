@@ -121,6 +121,7 @@ function ready() {
         const baseUrl = 'http://satyr.io'
         let url = this.buildUrl(baseUrl, paramsUrl)
         console.log(url)
+        this.$emit('url-ready', url)
 
       },
       getDimension: function ( {width, height}) {
@@ -437,11 +438,18 @@ function ready() {
    * общий компонент для всего приложения
    */
   Vue.component('root-component', {
+    methods: {
+      onUrlReady: function (url) {
+        console.log(`url = ${url}`);
+      }
+    },
     template: `
       <div class="container">
           <div class="row">
               <div class="col-md-5 bg-info">
-                  <form-root></form-root>
+                  <form-root
+                    v-on:url-ready="onUrlReady"
+                  ></form-root>
               </div>
               <div class="col bg-light">
       
