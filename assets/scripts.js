@@ -480,6 +480,17 @@ function ready() {
         return true
       }
     },
+    methods: {
+      onClick: function () {
+        console.log(document);
+        let link = document.createElement('a')
+        link.setAttribute('href', this.url)
+        link.setAttribute('target', '_blank')
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
+      }
+    },
     template: `
       <div class="media">
         <info v-if="!isParams"></info>
@@ -488,8 +499,13 @@ function ready() {
               class="mr-3 img-fluid"
               v-bind:alt="url"
           >
-          <div class="media-body">
-              <button type="button" class="btn btn-info">Скачать</button>
+          <div>
+            <p>Чтобы сохранить картинку, нажмите на ней правой кнопкой мыши и выберите подходящий пункт меню.</p>
+            <p>Вы также можете открыть картинку в новой вкладке кликнув по ссылке
+              <a href="#"
+                 v-on:click.prevent="onClick"
+                >открыть</a>
+            </p>
           </div>
         </template>
       </div>
