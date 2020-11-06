@@ -415,7 +415,12 @@ function ready() {
    * radio button
    */
   Vue.component('form-element-radio',{
-    props: ['label'],
+    props: {
+      label: {
+        type: String,
+        required: true,
+      }
+    },
     data: function() {
       return {
         picked: 'jpg',
