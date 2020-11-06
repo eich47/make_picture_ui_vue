@@ -381,7 +381,12 @@ function ready() {
    * input type text
    */
   Vue.component('form-element-text',{
-    props: ['label'],
+    props: {
+      label: {
+        type: String,
+        required: true,
+      }
+    },
     data: function () {
       return {
         labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
