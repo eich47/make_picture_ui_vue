@@ -233,10 +233,16 @@ function ready() {
    * враппер для элементов формы
    */
   Vue.component('form-element', {
-    props: [
-      'title',
-      'components'
-    ],
+    props: {
+      title: {
+        type: String,
+        required: true,
+      },
+      components: {
+        type: Array,
+        required: true,
+      }
+    },
     methods: {
       inputDataUser: function (data) {
         //пробрасываем событие и данные дальше вверх
