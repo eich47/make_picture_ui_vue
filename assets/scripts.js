@@ -344,7 +344,12 @@ function ready() {
    * input type color
    */
   Vue.component('form-element-color', {
-    props: ['label'],
+    props: {
+      label: {
+        type: String,
+        required: true,
+      }
+    },
     data: function () {
       return {
         labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
