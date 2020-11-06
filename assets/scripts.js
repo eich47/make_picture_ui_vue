@@ -270,7 +270,20 @@ function ready() {
    * input type number
    */
   Vue.component('form-element-number', {
-    props: ['label', 'inputName', 'isCorrect'],
+    props: {
+      label: {
+        type: String,
+        required: true,
+      },
+      inputName: {
+        type: String,
+        required: true,
+      },
+      isCorrect: {
+        type: Boolean,
+        required: true,
+      }
+    },
     data: function(){
       return {
         'label_id': (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0),
