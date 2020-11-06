@@ -474,7 +474,12 @@ function ready() {
    * checkbox
    */
   Vue.component('form-element-checkbox', {
-    props: ['label'],
+    props: {
+      label: {
+        type: String,
+        required: true,
+      }
+    },
     data: function(){
       return {
         checked: false
