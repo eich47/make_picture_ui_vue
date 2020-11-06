@@ -26,7 +26,7 @@ function ready() {
        <!--текст на картике-->
        <form-element
             class="text"
-            v-bind:title="'Текст'"
+            v-bind:title="'Задайте текст (не обязательно)'"
             v-bind:components="text"
             v-on:user-data="addDataForPictureOptions"></form-element>
             
@@ -41,7 +41,7 @@ function ready() {
        <!--добавлять или нет текстуру-->
        <form-element
             class="texture"
-            v-bind:title="'Добавление текстуры'"
+            v-bind:title="'Добавьте текстуру (не обязательно)'"
             v-bind:components="texture"
             v-on:user-data="addDataForPictureOptions"
        ></form-element>
@@ -76,7 +76,7 @@ function ready() {
         'text': [
           {
             name: 'form-element-text',
-            label: 'Введите текст'
+            label: 'Текст'
           }
         ],
         'extension': [
@@ -529,6 +529,11 @@ function ready() {
         return true
       }
     },
+    data: function(){
+      return {
+        isLoading: true
+      }
+    },
     methods: {
       onClick: function () {
         console.log(document);
@@ -538,26 +543,35 @@ function ready() {
         document.body.appendChild(link)
         link.click()
         link.remove()
+      },
+      onLoadPicture: function () {
+        this.isLoading = false
       }
     },
     template: `
       <div>
         <info v-if="!isParams"></info>
+        
+        <div v-if="isLoading && isParams">загрузка....</div>
+        
         <template v-if="isParams">
-        <div>
-          <img v-bind:src="url"
-              class="mr-3 img-fluid"
-              v-bind:alt="url"
-          >
-        </div>
-          <div class="mt-3">
-            <p>Чтобы сохранить картинку, нажмите на ней правой кнопкой мыши и выберите подходящий пункт меню.</p>
-            <p>Вы также можете открыть картинку в новой вкладке кликнув по ссылке
-              <a href="#"
-                 v-on:click.prevent="onClick"
-                >открыть</a>
-            </p>
+          <div>
+            <img v-bind:src="url"
+                class="mr-3 img-fluid"
+                v-bind:alt="url"
+                v-on:load="onLoadPicture"
+            >
           </div>
+            <div class="mt-3"
+                v-if="!isLoading"
+            >
+              <p>Чтобы сохранить картинку, нажмите на ней правой кнопкой мыши и выберите подходящий пункт меню.</p>
+              <p>Вы также можете открыть картинку в новой вкладке кликнув по ссылке
+                <a href="#"
+                   v-on:click.prevent="onClick"
+                  >открыть</a>
+              </p>
+            </div>
         </template>
       </div>
     
