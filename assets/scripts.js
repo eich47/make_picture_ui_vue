@@ -536,10 +536,19 @@ function ready() {
    * submit button
    */
   Vue.component('form-element-submit', {
+    computed: {
+      isLoading() {
+         return this.$store.state.isLoadingPicture
+      }
+    },
     template: `
       <div class="form-group row">
           <div class="col-sm-10 col-md-9 ml-auto">
-              <input type="submit" class="form-control bg-light" value="Получить картинку">
+              <input type="submit"
+                        class="form-control bg-light"
+                        value="Получить картинку"
+                        :disabled="isLoading"
+                        >
           </div>
       </div>
     `
