@@ -3,6 +3,21 @@ document.addEventListener('DOMContentLoaded', ready)
 function ready() {
   
   /**
+   * vues store
+   */
+  const storeApp = new Vuex.Store({
+    state:{
+    
+    },
+    mutations: {
+    
+    }
+  })
+  
+  
+  
+  
+  /**
    * сама форма
    */
   Vue.component('form-root', {
@@ -633,5 +648,6 @@ function ready() {
    */
   let app = new Vue({
     el: '#app',
+    store: storeApp,
   })
 }
