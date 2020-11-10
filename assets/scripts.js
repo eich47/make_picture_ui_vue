@@ -7,11 +7,14 @@ function ready() {
    */
   const storeApp = new Vuex.Store({
     state:{
-    
+      isLoadingPicture: false, //загружается картинка
     },
     mutations: {
-    
-    }
+      changeStatusIsLoadingPictureMutation(state, payload){
+        state.isLoadingPicture = payload.flag
+        // console.trace('111')
+      }
+    },
   })
   
   
@@ -151,6 +154,11 @@ function ready() {
           console.log(url)
           this.oldUrl = this.currentUrl
           this.$emit('url-ready', this.currentUrl)
+          
+          this.$store.commit({
+            type: 'changeStatusIsLoadingPictureMutation',
+            flag: true,
+          })
         } else {
           console.log('url остался прежним!!!')
         }
@@ -237,6 +245,7 @@ function ready() {
             url.searchParams.set(key, value )
           }
         }
+        // url.searchParams.set('delay', '3g')
         
         return url
       }
@@ -581,11 +590,9 @@ function ready() {
           return false
         }
         return true
-      }
-    },
-    data: function(){
-      return {
-        isLoading: true
+      },
+      isLoadingState() {
+        return this.$store.state.isLoadingPicture
       }
     },
     methods: {
@@ -599,14 +606,18 @@ function ready() {
         link.remove()
       },
       onLoadPicture: function () {
-        this.isLoading = false
+        this.$store.commit({
+          type: 'changeStatusIsLoadingPictureMutation',
+          flag: false,
+        })
       }
     },
     template: `
       <div>
+      <div v-if="isLoadingState">dfsfsfsd</div>
         <info v-if="!isParams"></info>
         
-        <div v-if="isLoading && isParams">загрузка....</div>
+        <div v-if="isLoadingState && isParams">загрузка....</div>
         
         <template v-if="isParams">
           <div>
@@ -617,7 +628,7 @@ function ready() {
             >
           </div>
             <div class="mt-3"
-                v-if="!isLoading"
+                v-if="!isLoadingState"
             >
               <p>Чтобы сохранить картинку, нажмите на ней правой кнопкой мыши и выберите подходящий пункт меню.</p>
               <p>Вы также можете открыть картинку в новой вкладке кликнув по ссылке
