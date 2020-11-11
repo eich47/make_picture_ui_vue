@@ -8,13 +8,97 @@ function ready() {
   const storeApp = new Vuex.Store({
     state:{
       isLoadingPicture: false, //загружается картинка
+      pictureOptions: {
+        width: 0, //ширина картинки
+        height: 0, //высота картинки
+        color: '#c0c0c0', //цвет по умолчанию
+        text: '', //текст
+        extension: 'jpg', //расширение картинки
+        texture: false, //добавлять ли текстуру
+      },
+      pictureOptionsValidationStatus:{
+        isValidWidth: false,
+        isValidHeight: false,
+      }
     },
     mutations: {
       changeStatusIsLoadingPictureMutation(state, payload){
         state.isLoadingPicture = payload.flag
         // console.trace('111')
+      },
+      //изменение в сторе ширины
+      changeWidthMutation(state, payload){
+        state.pictureOptions.width = payload.number
+      },
+      //прошла ли ширина валидацию
+      changeValidWidthMutation(state, payload){
+        state.pictureOptionsValidationStatus.isValidWidth = payload.valid
+      },
+      //изменение в сторе высоты
+      changeHeightMutation(state, payload){
+        state.pictureOptions.height = payload.number
+      },
+      //прошла ли высота валидацию
+      changeValidHeightMutation(state, payload){
+        state.pictureOptionsValidationStatus.isValidHeight = payload.valid
+      },
+      
+      
+    },
+    actions: {
+      checkWidth({commit, state}, payload){
+        let {number: width} = payload
+        if (width <= 0){
+          //указываем что валидация не прошла
+          commit({
+            type: 'changeValidWidthMutation',
+            valid: false,
+          });
+        } else {
+          commit({
+            type: 'changeValidWidthMutation',
+            valid: true,
+          })
+        }
+  
+        //записываем значение в стор
+        commit({
+          type: 'changeWidthMutation',
+          number: width,
+        })
+      },
+  
+      checkHeight({commit, state}, payload){
+        let {number: height} = payload
+        if (height <= 0){
+          //указываем что валидация не прошла
+          commit({
+            type: 'changeValidHeightMutation',
+            valid: false,
+          })
+        } else {
+          commit({
+            type: 'changeValidHeightMutation',
+            valid: true,
+          })
+        }
+  
+        //записываем значение в стор
+        commit({
+          type: 'changeHeightMutation',
+          number: height,
+        })
       }
     },
+    
+    getters: {
+      isValidWidth: state => {
+        return state.pictureOptionsValidationStatus.isValidWidth
+      },
+      isValidHeight: state => {
+        return state.pictureOptionsValidationStatus.isValidHeight
+      }
+    }
   })
   
   
@@ -139,7 +223,6 @@ function ready() {
         // http://satyr.io/80x60?texture=cross
         
         // http://satyr.io/800x700/pink/?text=hello+world&type=jpg&texture=cross
-        
         let paramsUrl = this.buildParamsForUrl()
         //если не удалось получить корректные обязательные параметры
         if (paramsUrl === false){
@@ -209,7 +292,7 @@ function ready() {
       buildParamsForUrl: function () {
         let params = {}
         
-        let dimension = this.getDimension(this.pictureOptions)
+        let dimension = this.getDimension(this.$store.state.pictureOptions)
         //так как ширина и высота обязательные атрибуты то они должны быть корректные,
         //иначе урл к апи будет не правильным
         if ( dimension === false){
@@ -311,40 +394,76 @@ function ready() {
     data: function(){
       return {
         'label_id': (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0),
-        isCorrectNumber: true,
+        // isCorrectNumber: true,
         isNumberToMuch: false,
+        //TODO: сделать проверку на макс размер
         maxSize: 5000, //максимальный размер вводимого значения
-        isCorrectData: true, //т.к. нельзя изменять props то запишем их значение в data
-        
+        // isCorrectData: true, //т.к. нельзя изменять props то запишем их значение в data
+        isTouched: false, //пробывал ли пользователь что-то вводить
+        currentValue: null, //текущее значение введенное пользователем
       }
+    },
+    computed: {
+      isCorrectNumber(){
+        
+        if( !this.isTouched || this.currentValue === null ){
+          return true
+        }
+        
+        if ( this.inputName === 'width'){
+          return this.$store.state.pictureOptionsValidationStatus.isValidWidth
+        } else if ( this.inputName === 'height'){
+          return this.$store.state.pictureOptionsValidationStatus.isValidHeight
+        } else {
+          throw Error(`unknown field: ${this.inputName}`)
+        }
+      }
+  
     },
     methods: {
       inputEvent: function (event) {
         //устнавливаем значения по умолчанию, чтобы сбросить ошибки
-        this.isCorrectNumber = true
+        // this.isCorrectNumber = true
         this.isNumberToMuch = false
-        this.isCorrectData = true
+        // this.isCorrectData = true
         
         let inputUser = event.target.value;
         let digital = Number(inputUser)
+        this.currentValue = digital
         
-        if(digital <= 0){
-          this.isCorrectNumber = false
-          return
-        }
-        if(digital > this.maxSize){
-          this.isNumberToMuch = true
-          return
-        }
+        // if(digital <= 0){
+        //   this.isCorrectNumber = false
+        //   return
+        // }
+        // if(digital > this.maxSize){
+        //   this.isNumberToMuch = true
+        //   return
+        // }
+        
         //передаем родительскому компоненту введенное число и название ключа к которому относится число
-        this.$emit('user-data', {[this.inputName] :digital})
+        // this.$emit('user-data', {[this.inputName] :digital})
+        
+        //проверим и сохраним данные в state
+        if (this.inputName === 'width'){
+          this.$store.dispatch('checkWidth',{
+            number: digital,
+          })
+        } else if (this.inputName === 'height'){
+          this.$store.dispatch({
+            type: 'checkHeight',
+            number: digital,
+          })
+        } else {
+          throw Error(`unknown field: ${this.inputName}`)
+        }
+        
       },
     },
     watch:{
-      isCorrect: function () {
-        console.log('isCorrectData ' + this.isCorrect);
-        return this.isCorrectData = this.isCorrect
-      }
+      // isCorrect: function () {
+      //   console.log('isCorrectData ' + this.isCorrect);
+      //   return this.isCorrectData = this.isCorrect
+      // }
     },
     template: `
         <div class="form-group row">
@@ -353,10 +472,11 @@ function ready() {
                 <input type="number" class="form-control"
                 v-bind:name="inputName"
                 v-bind:id="label_id"
-                v-on:input="inputEvent"
-                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}, {'is-invalid' : !isCorrectData}]"
+                v-on:input.number="inputEvent"
+                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}]"
+                @focus.once="isTouched = true"
                 >
-                <div class="invalid-feedback" v-if="!isCorrectData || !isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
+                <div class="invalid-feedback" v-if="!isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
                 <div class="invalid-feedback" v-if="isNumberToMuch">Максимальный размер {{maxSize}} px</div>
             </div>
         </div>
@@ -539,6 +659,10 @@ function ready() {
     computed: {
       isLoading() {
          return this.$store.state.isLoadingPicture
+      },
+      isValidUserData(){
+        return this.$store.getters.isValidWidth
+        && this.$store.getters.isValidHeight
       }
     },
     template: `
@@ -547,7 +671,7 @@ function ready() {
               <input type="submit"
                         class="form-control bg-light"
                         value="Получить картинку"
-                        :disabled="isLoading"
+                        :disabled="isLoading || !isValidUserData"
                         >
           </div>
       </div>
