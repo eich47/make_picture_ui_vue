@@ -12,7 +12,10 @@ export default {
   },
   watch: {
     checked: function () {
-      return this.$emit('user-data', {texture: this.checked})
+      this.$store.commit({
+        type: 'setTexture',
+        texture: this.checked
+      })
     }
   },
   template: `

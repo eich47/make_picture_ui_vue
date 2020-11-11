@@ -73,6 +73,9 @@ function ready() {
       },
       setExtension(state, payload){
         state.pictureOptions.extension = payload.extension
+      },
+      setTexture(state, payload){
+        state.pictureOptions.texture = payload.texture
       }
       
     },

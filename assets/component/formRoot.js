@@ -200,7 +200,7 @@ export default {
       let extension = this.getExtension(this.$store.state.pictureOptions)
       params.type = ( extension === false ) ? false : extension
       
-      let texture = this.getTexture(this.pictureOptions)
+      let texture = this.getTexture(this.$store.state.pictureOptions)
       params.texture = ( texture === false ) ? false : 'cross'
       
       return params
