@@ -30,7 +30,6 @@ export default {
   },
   template: `
       <div>
-      <div v-if="isLoadingState">dfsfsfsd</div>
         <info v-if="!isParams"></info>
         
         <div v-if="isLoadingState && isParams">загрузка....</div>
