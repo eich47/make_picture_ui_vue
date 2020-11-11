@@ -68,6 +68,9 @@ function ready() {
       setColor(state, payload){
         state.pictureOptions.color = payload.color
       },
+      setText(state, payload){
+        state.pictureOptions.text = payload.text
+      },
       
     },
     actions: {

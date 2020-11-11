@@ -164,7 +164,7 @@ export default {
       }
       return color
     },
-    getText: function ({user_text}) {
+    getText: function ({text: user_text}) {
       if( user_text === ''){
         return false
       }
@@ -194,7 +194,7 @@ export default {
       let color = this.getColor(this.$store.state.pictureOptions)
       params.color = ( color === false ) ? '' : color
       
-      let text = this.getText(this.pictureOptions)
+      let text = this.getText(this.$store.state.pictureOptions)
       params.text = ( text === false ) ? false : text
       
       let extension = this.getExtension(this.pictureOptions)

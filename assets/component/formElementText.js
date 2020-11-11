@@ -12,9 +12,12 @@ export default {
   },
   methods: {
     inputTextForPicture: function (event) {
-      let text = event.target.value
-      let textObj = {user_text : text}
-      this.$emit('user-data', textObj)
+      let text = event.target.value;
+      text = text.trim();
+      this.$store.commit({
+        type: 'setText',
+        text: text
+      })
     }
   },
   template: `
