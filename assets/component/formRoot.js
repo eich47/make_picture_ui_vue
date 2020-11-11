@@ -156,7 +156,7 @@ export default {
       
       return `${width}x${height}`
     },
-    getColor: function ( {user_color} ) {
+    getColor: function ( {color: user_color} ) {
       let color = false;
       //если пользователей выбрал цвет (например #000080)
       if( user_color.length === 7){
@@ -191,7 +191,7 @@ export default {
       }
       params.widthAndHeight = dimension
       
-      let color = this.getColor(this.pictureOptions)
+      let color = this.getColor(this.$store.state.pictureOptions)
       params.color = ( color === false ) ? '' : color
       
       let text = this.getText(this.pictureOptions)

@@ -13,8 +13,10 @@ export default {
   methods: {
     selectColor: function (event) {
       let hexColor = event.target.value
-      let hexColorObj = {user_color: hexColor}
-      this.$emit('user-data', hexColorObj)
+      this.$store.commit({
+        type: 'setColor',
+        color: hexColor
+      })
     }
   },
   template: `

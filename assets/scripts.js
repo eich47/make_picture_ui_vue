@@ -65,7 +65,9 @@ function ready() {
       setValidMaxSizeHeightMutation(state, payload){
         state.pictureOptionsValidationStatus.isValidMaxSizeHeight = payload.valid
       },
-      
+      setColor(state, payload){
+        state.pictureOptions.color = payload.color
+      },
       
     },
     actions: {
