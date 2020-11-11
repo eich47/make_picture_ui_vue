@@ -197,7 +197,7 @@ export default {
       let text = this.getText(this.$store.state.pictureOptions)
       params.text = ( text === false ) ? false : text
       
-      let extension = this.getExtension(this.pictureOptions)
+      let extension = this.getExtension(this.$store.state.pictureOptions)
       params.type = ( extension === false ) ? false : extension
       
       let texture = this.getTexture(this.pictureOptions)

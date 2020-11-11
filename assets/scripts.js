@@ -71,6 +71,9 @@ function ready() {
       setText(state, payload){
         state.pictureOptions.text = payload.text
       },
+      setExtension(state, payload){
+        state.pictureOptions.extension = payload.extension
+      }
       
     },
     actions: {

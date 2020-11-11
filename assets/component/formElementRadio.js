@@ -12,8 +12,10 @@ export default {
   },
   watch:{
     picked: function () {
-      let extensionObj = {extension: this.picked}
-      return this.$emit('user-data', extensionObj)
+      this.$store.commit({
+        type: 'setExtension',
+        extension: this.picked,
+      })
       
     }
   },
