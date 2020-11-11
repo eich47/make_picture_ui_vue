@@ -27,10 +27,13 @@ function ready() {
         text: '', //текст
         extension: 'jpg', //расширение картинки
         texture: false, //добавлять ли текстуру
+        maxSizeDimension: 5000, //максимальная ширина/высота картинки
       },
       pictureOptionsValidationStatus:{
         isValidWidth: false,
         isValidHeight: false,
+        isValidMaxSizeWidth: true,
+        isValidMaxSizeHeight: true,
       }
     },
     mutations: {
@@ -54,6 +57,14 @@ function ready() {
       changeValidHeightMutation(state, payload){
         state.pictureOptionsValidationStatus.isValidHeight = payload.valid
       },
+      //меньше ли ширина максимального размера
+      setValidMaxSizeWidthMutation(state, payload){
+        state.pictureOptionsValidationStatus.isValidMaxSizeWidth = payload.valid
+      },
+      //меньше ли высота максимального размера
+      setValidMaxSizeHeightMutation(state, payload){
+        state.pictureOptionsValidationStatus.isValidMaxSizeHeight = payload.valid
+      },
       
       
     },
@@ -70,6 +81,18 @@ function ready() {
           commit({
             type: 'changeValidWidthMutation',
             valid: true,
+          })
+        }
+        
+        if (width > state.pictureOptions.maxSizeDimension){
+          commit({
+            type: 'setValidMaxSizeWidthMutation',
+            valid: false
+          })
+        } else {
+          commit({
+            type: 'setValidMaxSizeWidthMutation',
+            valid: true
           })
         }
   
@@ -95,6 +118,19 @@ function ready() {
           })
         }
   
+  
+        if (height > state.pictureOptions.maxSizeDimension){
+          commit({
+            type: 'setValidMaxSizeHeightMutation',
+            valid: false
+          })
+        } else {
+          commit({
+            type: 'setValidMaxSizeHeightMutation',
+            valid: true
+          })
+        }
+        
         //записываем значение в стор
         commit({
           type: 'changeHeightMutation',
@@ -109,7 +145,11 @@ function ready() {
       },
       isValidHeight: state => {
         return state.pictureOptionsValidationStatus.isValidHeight
-      }
+      },
+      isValidMaxSize: state => {
+        return state. pictureOptionsValidationStatus.isValidMaxSizeWidth
+          && state.pictureOptionsValidationStatus.isValidMaxSizeHeight
+      },
     }
   })
   

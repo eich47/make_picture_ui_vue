@@ -17,9 +17,6 @@ export default {
     return {
       'label_id': (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0),
       // isCorrectNumber: true,
-      isNumberToMuch: false,
-      //TODO: сделать проверку на макс размер
-      maxSize: 5000, //максимальный размер вводимого значения
       // isCorrectData: true, //т.к. нельзя изменять props то запишем их значение в data
       isTouched: false, //пробывал ли пользователь что-то вводить
       currentValue: null, //текущее значение введенное пользователем
@@ -39,14 +36,25 @@ export default {
       } else {
         throw Error(`unknown field: ${this.inputName}`)
       }
-    }
+    },
+    isValidMaxSize(){
+      if ( this.inputName === 'width'){
+        return this.$store.state.pictureOptionsValidationStatus.isValidMaxSizeWidth
+      } else if ( this.inputName === 'height'){
+        return this.$store.state.pictureOptionsValidationStatus.isValidMaxSizeHeight
+      } else {
+        throw Error(`unknown field: ${this.inputName}`)
+      }
+    },
+    maxSize(){
+      return this.$store.state.pictureOptions.maxSizeDimension
+    },
     
   },
   methods: {
     inputEvent: function (event) {
       //устнавливаем значения по умолчанию, чтобы сбросить ошибки
       // this.isCorrectNumber = true
-      this.isNumberToMuch = false
       // this.isCorrectData = true
       
       let inputUser = event.target.value;
@@ -95,11 +103,11 @@ export default {
                 v-bind:name="inputName"
                 v-bind:id="label_id"
                 v-on:input.number="inputEvent"
-                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': isNumberToMuch}]"
+                v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': !isValidMaxSize}]"
                 @focus.once="isTouched = true"
                 >
                 <div class="invalid-feedback" v-if="!isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
-                <div class="invalid-feedback" v-if="isNumberToMuch">Максимальный размер {{maxSize}} px</div>
+                <div class="invalid-feedback" v-if="!isValidMaxSize">Максимальный размер {{maxSize}} px</div>
             </div>
         </div>
     `

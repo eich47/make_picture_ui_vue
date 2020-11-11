@@ -6,6 +6,7 @@ export default {
     isValidUserData(){
       return this.$store.getters.isValidWidth
         && this.$store.getters.isValidHeight
+        && this.$store.getters.isValidMaxSize
     }
   },
   template: `
