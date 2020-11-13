@@ -133,6 +133,24 @@ export default {
           type: 'changeStatusIsLoadingPictureMutation',
           flag: true,
         })
+        
+        
+        //сохраняем параметры картинки в localstorage
+        const lastPicturesList = this.$store.state.lastPicturesList
+        //сделать копию массива
+        const lastPicturesListCopy = lastPicturesList.slice(0);
+        // let idCount = null
+        // if( lastPicturesList.length === 0){
+        //   idCount = 1
+        // } else {
+        //   idCount = lastPicturesList[0].id + 1
+        // }
+        let currentOptions = this.$store.state.pictureOptions;
+        // currentOptions.id = idCount
+        lastPicturesListCopy.unshift(currentOptions)
+        let lastPicturesListJson = JSON.stringify(lastPicturesListCopy)
+        localStorage.setItem('pictureOptions', lastPicturesListJson)
+        
       } else {
         console.log('url остался прежним!!!')
       }

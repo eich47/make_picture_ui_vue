@@ -7,17 +7,30 @@ export default {
   },
   data: function() {
     return {
-      picked: 'jpg',
+      // picked: this.$store.getters.getExtension,
+    }
+  },
+  computed: {
+    picked: {
+      get: function () {
+        return this.$store.getters.getExtension
+      },
+      set: function (newValue) {
+        this.$store.commit({
+          type: 'setExtension',
+          extension: newValue
+        })
+      }
     }
   },
   watch:{
-    picked: function () {
-      this.$store.commit({
-        type: 'setExtension',
-        extension: this.picked,
-      })
-      
-    }
+    // picked: function () {
+    //   this.$store.commit({
+    //     type: 'setExtension',
+    //     extension: this.picked,
+    //   })
+    //
+    // }
   },
   template: `
         <div class="form-group row">

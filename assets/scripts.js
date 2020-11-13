@@ -9,6 +9,9 @@ import formElementRadio from './component/formElementRadio.js'
 import formElementCheckbox from './component/formElementCheckbox.js'
 import blockImage from './component/blockImage.js'
 import info from './component/info.js'
+import {pictureOptions} from './component/constant.js'
+import lastPicture from './component/lastPicture.js'
+import lastOptionsPicture from './component/lastOptionsPicture.js'
 
 document.addEventListener('DOMContentLoaded', ready)
 
@@ -34,7 +37,8 @@ function ready() {
         isValidHeight: false,
         isValidMaxSizeWidth: true,
         isValidMaxSizeHeight: true,
-      }
+      },
+      lastPicturesList: [], //список параметров последних созданных картинок
     },
     mutations: {
       changeStatusIsLoadingPictureMutation(state, payload){
@@ -76,8 +80,23 @@ function ready() {
       },
       setTexture(state, payload){
         state.pictureOptions.texture = payload.texture
+      },
+      loadSavedPictures(state, payload){
+        state.lastPicturesList = payload.lastPic
+      },
+      loadSelectedOptionsMutation(state, payload){
+        state.pictureOptions = payload.options
+      },
+      deleteSelectedOptions(state, payload){
+        const selectedOptions = payload.options
+        const listAfterDelete = state.lastPicturesList.filter((options)=>{
+          const optionsJson = JSON.stringify(options)
+          const selectedOptionsJson = JSON.stringify(selectedOptions)
+          return optionsJson !== selectedOptionsJson
+        })
+        state.lastPicturesList = listAfterDelete
+        localStorage.setItem('pictureOptions', listAfterDelete)
       }
-      
     },
     actions: {
       checkWidth({commit, state}, payload){
@@ -147,6 +166,39 @@ function ready() {
           type: 'changeHeightMutation',
           number: height,
         })
+      },
+      
+      getLastPicture({commit, state}){
+        let picturesListString = window.localStorage.getItem(pictureOptions)
+        if(picturesListString !== ""){
+          let picturesList = JSON.parse(picturesListString)
+          commit({
+            type: 'loadSavedPictures',
+            lastPic: picturesList,
+          })
+        }
+      },
+      
+      loadSelectedOptions({commit, state, dispatch}, payload){
+        const o = payload.options
+        const clone = Object.assign({}, o)
+        
+        commit({
+          type: 'loadSelectedOptionsMutation',
+          options: clone
+        });
+        
+        dispatch({
+          type: 'checkWidth',
+          number: clone.width
+        });
+        
+        dispatch({
+          type: 'checkHeight',
+          number: clone.height
+        })
+        
+        
       }
     },
     
@@ -161,6 +213,24 @@ function ready() {
         return state. pictureOptionsValidationStatus.isValidMaxSizeWidth
           && state.pictureOptionsValidationStatus.isValidMaxSizeHeight
       },
+      getWidth: state => {
+        return state.pictureOptions.width
+      },
+      getHeight: state => {
+        return state.pictureOptions.height
+      },
+      getColor: state => {
+        return state.pictureOptions.color
+      },
+      getExtension: state => {
+        return state.pictureOptions.extension
+      },
+      getTexture: state => {
+        return state.pictureOptions.texture
+      },
+      getText: state => {
+        return state.pictureOptions.text
+      }
     }
   })
   
@@ -226,6 +296,17 @@ function ready() {
    * Сообщение при загруке страницы
    */
   Vue.component('info', info )
+  
+  /**
+   * Список параметров последних картинок
+   */
+  Vue.component('last-picture-list', lastPicture)
+  
+  /**
+   * Компонент для отображении ранее введенных опций картинки
+   */
+  Vue.component('last-options-picture', lastOptionsPicture )
+  
   
   /**
    * vue

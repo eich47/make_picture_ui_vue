@@ -26,6 +26,10 @@ export default {
         type: 'changeStatusIsLoadingPictureMutation',
         flag: false,
       })
+      //обновим лист с последними настройками которые вводил пользователь
+      this.$store.dispatch({
+        type: 'getLastPicture'
+      })
     }
   },
   template: `

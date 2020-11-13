@@ -10,6 +10,11 @@ export default {
       labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
     }
   },
+  computed: {
+    getColor(){
+      return this.$store.getters.getColor
+    }
+  },
   methods: {
     selectColor: function (event) {
       let hexColor = event.target.value
@@ -26,7 +31,7 @@ export default {
               <input type="color" class="form-control" name="user_color"
               v-bind:id="labelId"
               v-on:input="selectColor"
-              value="#c0c0c0"
+              :value="getColor"
               >
           </div>
       </div>

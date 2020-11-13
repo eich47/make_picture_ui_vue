@@ -7,16 +7,29 @@ export default {
   },
   data: function(){
     return {
-      checked: false
+      // checked: this.isChecked
+    }
+  },
+  computed: {
+    checked: {
+      get: function() {
+        return this.$store.getters.getTexture
+      },
+      set: function(newValue){
+        this.$store.commit({
+          type: 'setTexture',
+          texture: newValue
+        })
+      }
     }
   },
   watch: {
-    checked: function () {
-      this.$store.commit({
-        type: 'setTexture',
-        texture: this.checked
-      })
-    }
+    // checked: function () {
+    //   this.$store.commit({
+    //     type: 'setTexture',
+    //     texture: this.checked
+    //   })
+    // }
   },
   template: `
       <div class="form-group row">

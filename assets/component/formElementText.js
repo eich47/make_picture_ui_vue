@@ -10,6 +10,11 @@ export default {
       labelId: (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
     }
   },
+  computed: {
+    value(){
+      return this.$store.getters.getText
+    }
+  },
   methods: {
     inputTextForPicture: function (event) {
       let text = event.target.value;
@@ -26,7 +31,9 @@ export default {
           <div class="col-sm-10 col-md-9">
               <input type="text" class="form-control" name="user_text"
               v-bind:id="labelId"
-              v-on:input="inputTextForPicture">
+              v-on:input="inputTextForPicture"
+              :value="value"
+              >
           </div>
       </div>
     `

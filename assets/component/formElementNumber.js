@@ -49,7 +49,15 @@ export default {
     maxSize(){
       return this.$store.state.pictureOptions.maxSizeDimension
     },
-    
+    value(){
+      if (this.inputName === 'width') {
+        return this.$store.getters.getWidth
+      } else if (this.inputName === 'height'){
+        return this.$store.getters.getHeight
+      } else {
+          throw Error(`unknown field: ${this.inputName}`)
+      }
+    }
   },
   methods: {
     inputEvent: function (event) {
@@ -105,6 +113,7 @@ export default {
                 v-on:input.number="inputEvent"
                 v-bind:class="[{'is-invalid': !isCorrectNumber}, {'is-invalid': !isValidMaxSize}]"
                 @focus.once="isTouched = true"
+                :value="value"
                 >
                 <div class="invalid-feedback" v-if="!isCorrectNumber">Введите корректный размер (макс. {{maxSize}})</div>
                 <div class="invalid-feedback" v-if="!isValidMaxSize">Максимальный размер {{maxSize}} px</div>

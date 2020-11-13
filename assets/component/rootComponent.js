@@ -23,7 +23,11 @@ export default {
                 <block-image
                     v-bind:url="url"
                 ></block-image>
+                <div>
+                    <last-picture-list></last-picture-list>
               </div>
+              </div>
+              
           </div>
       </div>
     `
