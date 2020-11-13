@@ -24,7 +24,7 @@ export default {
   },
   template:`
     <div v-if="countOfLastPicturesList > 0">
-    <div class="row no-gutters">
+    <div class="row">
         <last-options-picture
             v-for="options in lastPictureList"
             :options="options"

@@ -26,9 +26,9 @@ export default {
     },
   },
   template: `
-<div class="col-md-6">
+<div class="col-md-6 col-xl-4">
       <div class="card border-0">
-      <div class="card-body">
+      <div class="card-body px-0">
           <ul class="list-group">
               <li class="list-group-item text-center">{{options.width}}&nbsp;x {{options.height}}</li>
               <li class="list-group-item d-flex">
