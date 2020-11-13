@@ -30,9 +30,8 @@ export default {
       <div class="card border-0">
       <div class="card-body">
           <ul class="list-group">
-              <li class="list-group-item">Ширина: {{options.width}}&nbsp;px</li>
-              <li class="list-group-item">Высота: {{options.height}}&nbsp;px</li>
-              <li class="list-group-item d-flex"><span class="mr-2">Цвет:</span>
+              <li class="list-group-item text-center">{{options.width}}&nbsp;x {{options.height}}</li>
+              <li class="list-group-item d-flex">
                     <span class="flex-grow-1" :style="{backgroundColor: options.color}" >&nbsp;</span>
               </li>
               <li class="list-group-item">Формат: {{options.extension}}</li>
