@@ -148,6 +148,11 @@ export default {
         let currentOptions = this.$store.state.pictureOptions;
         // currentOptions.id = idCount
         lastPicturesListCopy.unshift(currentOptions)
+        
+        //будем хранить только 6 последних опций картинки
+        if(lastPicturesListCopy.length > 6){
+          lastPicturesListCopy.length = 6
+        }
         let lastPicturesListJson = JSON.stringify(lastPicturesListCopy)
         localStorage.setItem('pictureOptions', lastPicturesListJson)
         
