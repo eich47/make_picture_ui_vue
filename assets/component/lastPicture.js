@@ -27,7 +27,7 @@ export default {
     <div class="row no-gutters">
         <h3 v-if="countOfLastPicturesList < 6" class="h5 col-12">Последние созданные картинки: </h3>
         <h3 v-else class="h5 col-12">Последние 6 созданных картинок: </h3>
-        <p class="col-12 order-first">Вы также можете загрузить параметры ранее созданных картинок</p>
+        <p class="col-12 order-first mt-3">Вы также можете загрузить параметры ранее созданных картинок</p>
     </div>
     
     <div class="row">
