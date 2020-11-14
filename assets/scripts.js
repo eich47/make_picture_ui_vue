@@ -82,6 +82,7 @@ function ready() {
         state.pictureOptions.texture = payload.texture
       },
       loadSavedPictures(state, payload){
+        console.trace('11')
         state.lastPicturesList = payload.lastPic
       },
       loadSelectedOptionsMutation(state, payload){
@@ -170,7 +171,7 @@ function ready() {
       
       getLastPicture({commit, state}){
         let picturesListString = window.localStorage.getItem(pictureOptions)
-        if(picturesListString !== ""){
+        if(picturesListString !== null){
           let picturesList = JSON.parse(picturesListString)
           commit({
             type: 'loadSavedPictures',
