@@ -96,7 +96,8 @@ function ready() {
           return optionsJson !== selectedOptionsJson
         })
         state.lastPicturesList = listAfterDelete
-        localStorage.setItem('pictureOptions', listAfterDelete)
+        const listAfterDeleteJson = JSON.stringify(listAfterDelete)
+        localStorage.setItem('pictureOptions', listAfterDeleteJson)
       }
     },
     actions: {
