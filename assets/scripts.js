@@ -82,7 +82,6 @@ function ready() {
         state.pictureOptions.texture = payload.texture
       },
       loadSavedPictures(state, payload){
-        console.trace('11')
         state.lastPicturesList = payload.lastPic
       },
       loadSelectedOptionsMutation(state, payload){
