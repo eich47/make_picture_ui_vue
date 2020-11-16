@@ -1,1 +1,16 @@
 .idea
+
+.DS_Store
+v2/node_modules
+v2/dist
+
+
+# local env files
+v2/.env.local
+v2/.env.*.local
+
+# Log files
+v2/npm-debug.log*
+v2/yarn-debug.log*
+v2/yarn-error.log*
+v2/pnpm-debug.log*
