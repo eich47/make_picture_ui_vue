@@ -50,6 +50,10 @@
         >
 
         </FormCheckbox>
+<!--        кнопка создать-->
+        <FormButtonSubmit
+            :label="buttonSubmit.label"
+        ></FormButtonSubmit>
     </div>
 </template>
 
@@ -59,9 +63,10 @@
   import FormInputText from "./FormInputText";
   import FormRadioButton from "./FormRadioButton";
   import FormCheckbox from "./FormCheckbox";
+  import FormButtonSubmit from "./FormButtonSubmit";
   export default {
     name: "FormOptions",
-    components: {FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
+    components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
         width: {
@@ -98,6 +103,9 @@
           checkboxText: `добавить`,
           name: `texture`,
 
+        },
+        buttonSubmit: {
+            label: `Создать картинку`,
         },
       }
     },
