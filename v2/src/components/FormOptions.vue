@@ -17,14 +17,22 @@
             :isValidValueEnteredUser="height.isValid"
             :invalidMessage="height.invalidMessage"
     />
+        <!--цвет картинки-->
+        <FormSelectColor
+            :label="'Цвет'"
+            :generatedId="generateId()"
+            :value="color.value"
+            @input="onSelectColor"
+        ></FormSelectColor>
     </div>
 </template>
 
 <script>
   import FormInputNumber from "./FormInputNumber";
+  import FormSelectColor from "./FormSelectColor";
   export default {
     name: "FormOptions",
-    components: {FormInputNumber},
+    components: {FormSelectColor, FormInputNumber},
     data(){
       return {
         width: {
@@ -39,6 +47,9 @@
           invalidMessage: ``,
           maxValue: 5000,
         },
+        color: {
+          value: `#c0c0c0`
+        }
       }
     },
     computed: {
@@ -74,6 +85,9 @@
         this.height.isValid = isValid
         this.height.invalidMessage = invalidMessage
 
+      },
+      onSelectColor(color){
+        this.color.value = color
       },
       validationNumber(value, {maxValue}){
         const validationResult = {
