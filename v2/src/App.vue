@@ -18,8 +18,8 @@ import FormOptions from "./components/FormOptions";
 export default {
   name: 'App',
   components: {
-    FormOptions
-  }
+    FormOptions,
+  },
 }
 </script>
 

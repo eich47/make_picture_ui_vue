@@ -25,24 +25,24 @@
     props: {
       label: {
         type: String,
-        required: true
+        required: true,
       },
       generatedId: {
         type: String,
-        required: true
+        required: true,
       },
       value: {
         type: Number,
-        required: true
+        required: true,
       },
       isValidValueEnteredUser:{
         type: Boolean,
-        required: true
+        required: true,
       },
       invalidMessage: {
         type: String,
-        required: true
-      }
+        required: true,
+      },
     },
     }
 </script>
