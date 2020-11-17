@@ -8,7 +8,7 @@
     >
         <b-form-input
             type="color"
-            id="generatedId"
+            :id="generatedId"
             :value="value"
             @input="$emit('input', $event)"
         ></b-form-input>
