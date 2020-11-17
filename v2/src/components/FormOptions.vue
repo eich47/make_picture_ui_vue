@@ -1,4 +1,5 @@
 <template>
+    <div>
     <FormInputNumber
         :label="'Ширина'"
         :generatedId="generateId()"
@@ -7,6 +8,16 @@
         :isValidValueEnteredUser="width.isValid"
         :invalidMessage="width.invalidMessage"
     />
+    <!--высота картинки-->
+    <FormInputNumber
+            :label="'Высота'"
+            :generatedId="generateId()"
+            :value="startHeight"
+            @input="onInputHeight"
+            :isValidValueEnteredUser="height.isValid"
+            :invalidMessage="height.invalidMessage"
+    />
+    </div>
 </template>
 
 <script>
@@ -22,6 +33,12 @@
           invalidMessage: ``,
           maxValue: 5000,
         },
+        height: {
+          value: 0,
+          isValid: true,
+          invalidMessage: ``,
+          maxValue: 5000,
+        },
       }
     },
     computed: {
@@ -29,7 +46,10 @@
       startWidth() {
         //потом будет забираться из store
         return 0
-      }
+      },
+      startHeight(){
+        return 0
+      },
     },
     methods: {
       generateId(){
@@ -44,6 +64,15 @@
         const {isValid, invalidMessage} = this.validationNumber(value, this.width);
         this.width.isValid = isValid
         this.width.invalidMessage = invalidMessage
+
+      },
+      onInputHeight(value){
+        this.height.isValid = true
+        this.height.value = value
+
+        const {isValid, invalidMessage} = this.validationNumber(value, this.height)
+        this.height.isValid = isValid
+        this.height.invalidMessage = invalidMessage
 
       },
       validationNumber(value, {maxValue}){
