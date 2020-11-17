@@ -24,15 +24,25 @@
             :value="color.value"
             @input="onSelectColor"
         ></FormSelectColor>
+        <!--текст для картинки-->
+        <FormInputText
+            :label="'Текст'"
+            :generatedId="generateId()"
+            :value="text.value"
+            @input="onInputText"
+            :isValidValueEnteredUser="text.isValid"
+            :invalidMessage="text.invalidMessage"
+        ></FormInputText>
     </div>
 </template>
 
 <script>
   import FormInputNumber from "./FormInputNumber";
   import FormSelectColor from "./FormSelectColor";
+  import FormInputText from "./FormInputText";
   export default {
     name: "FormOptions",
-    components: {FormSelectColor, FormInputNumber},
+    components: {FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
         width: {
@@ -49,7 +59,13 @@
         },
         color: {
           value: `#c0c0c0`
-        }
+        },
+        text: {
+          value: ``,
+          isValid: true,
+          invalidMessage: ``,
+          maxValue: 200,
+        },
       }
     },
     computed: {
@@ -89,6 +105,14 @@
       onSelectColor(color){
         this.color.value = color
       },
+      onInputText(text){
+        this.text.value = text
+        console.log(text);
+        this.text.isValid = true
+        const {isValid, invalidMessage} = this.validationText(text, this.text)
+        this.text.isValid = isValid
+        this.text.invalidMessage = invalidMessage
+      },
       validationNumber(value, {maxValue}){
         const validationResult = {
           isValid: true,
@@ -103,7 +127,19 @@
         }
 
         return validationResult
-      }
+      },
+
+      validationText(value, {maxValue}){
+        const validationResult = {
+          isValid: true,
+          invalidMessage: ``,
+        }
+        if (value.length > maxValue){
+          validationResult.isValid = false
+          validationResult.invalidMessage = `Максимальное количество символов ${maxValue}`
+        }
+        return validationResult
+      },
 
     },
 
