@@ -33,6 +33,13 @@
             :isValidValueEnteredUser="text.isValid"
             :invalidMessage="text.invalidMessage"
         ></FormInputText>
+        <!--выбор расширения файла-->
+        <FormRadioButton
+            :label="'Тип файла'"
+            :options="extension.options"
+            :selected="extension.selected"
+            @change="onSelectExensions"
+        ></FormRadioButton>
     </div>
 </template>
 
@@ -40,9 +47,10 @@
   import FormInputNumber from "./FormInputNumber";
   import FormSelectColor from "./FormSelectColor";
   import FormInputText from "./FormInputText";
+  import FormRadioButton from "./FormRadioButton";
   export default {
     name: "FormOptions",
-    components: {FormInputText, FormSelectColor, FormInputNumber},
+    components: {FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
         width: {
@@ -58,13 +66,21 @@
           maxValue: 5000,
         },
         color: {
-          value: `#c0c0c0`
+          value: `#c0c0c0`,
         },
         text: {
           value: ``,
           isValid: true,
           invalidMessage: ``,
           maxValue: 200,
+        },
+        extension:{
+          selected: 'jpg',
+          options: [
+            {text: 'jpg', value: 'jpg'},
+            {text: 'gif', value: 'gif'},
+            {text: 'png', value: 'png'},
+          ],
         },
       }
     },
@@ -112,6 +128,9 @@
         const {isValid, invalidMessage} = this.validationText(text, this.text)
         this.text.isValid = isValid
         this.text.invalidMessage = invalidMessage
+      },
+      onSelectExensions(selectedExtension){
+        this.extension.selected = selectedExtension
       },
       validationNumber(value, {maxValue}){
         const validationResult = {
