@@ -9,7 +9,7 @@
         :state="isValidValueEnteredUser"
     >
        <b-form-input
-         id="generatedId"
+         :id="generatedId"
          type="number"
          :value="value"
          @input="$emit('input', $event)"
