@@ -2,6 +2,8 @@
     <b-form-group
         label-cols-sm="2"
         label-cols-md="3"
+        :invalid-feedback="invalidMessage"
+        :state="isValidData"
     >
         <b-button
                 type="submit"
@@ -20,6 +22,14 @@
     props: {
       label: {
         type: String,
+        required: true,
+      },
+      invalidMessage:{
+        type: String,
+        required: true,
+      },
+      isValidData: {
+        type: Boolean,
         required: true,
       },
     },

@@ -53,6 +53,8 @@
 <!--        кнопка создать-->
         <FormButtonSubmit
             :label="buttonSubmit.label"
+            :invalidMessage="buttonSubmit.invalidMessage"
+            :isValidData="buttonSubmit.isValidData"
         ></FormButtonSubmit>
     </b-form>
 </template>
@@ -106,6 +108,8 @@
         },
         buttonSubmit: {
             label: `Создать картинку`,
+            invalidMessage: `заполните обязательные поля`,
+            isValidData: true,
         },
       }
     },
@@ -163,6 +167,10 @@
           console.log('valid');
         } else {
           console.log('no valid');
+          this.buttonSubmit.isValidData = false
+          setTimeout(() => {
+            this.buttonSubmit.isValidData = true
+          }, 2000)
         }
       },
       isValidData(width, height, text){
