@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <b-form @submit.prevent="onSubmit" :novalidate="true">
     <FormInputNumber
         :label="'Ширина'"
         :generatedId="generateId()"
@@ -54,7 +54,7 @@
         <FormButtonSubmit
             :label="buttonSubmit.label"
         ></FormButtonSubmit>
-    </div>
+    </b-form>
 </template>
 
 <script>
@@ -71,13 +71,13 @@
       return {
         width: {
           value: 0,
-          isValid: true,
+          isValid: false, //обязательное поле
           invalidMessage: ``,
           maxValue: 5000,
         },
         height: {
           value: 0,
-          isValid: true,
+          isValid: false, //обязательное поле
           invalidMessage: ``,
           maxValue: 5000,
         },
@@ -86,7 +86,7 @@
         },
         text: {
           value: ``,
-          isValid: true,
+          isValid: true, //не обязательное поле для заполнения
           invalidMessage: ``,
           maxValue: 200,
         },
@@ -156,6 +156,17 @@
       },
       onSelectExensions(selectedExtension){
         this.extension.selected = selectedExtension
+      },
+      onSubmit(){
+        const isValid = this.isValidData(this.width, this.height, this.text)
+        if(isValid){
+          console.log('valid');
+        } else {
+          console.log('no valid');
+        }
+      },
+      isValidData(width, height, text){
+        return width.isValid && height.isValid && text.isValid
       },
       validationNumber(value, {maxValue}){
         const validationResult = {
