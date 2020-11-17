@@ -40,6 +40,16 @@
             :selected="extension.selected"
             @change="onSelectExensions"
         ></FormRadioButton>
+<!--        выбор текстуры-->
+        <FormCheckbox
+            :label="texture.label"
+            :checkboxText="texture.checkboxText"
+            :generatedId="generateId()"
+            :checked="false"
+            :name="texture.name"
+        >
+
+        </FormCheckbox>
     </div>
 </template>
 
@@ -48,9 +58,10 @@
   import FormSelectColor from "./FormSelectColor";
   import FormInputText from "./FormInputText";
   import FormRadioButton from "./FormRadioButton";
+  import FormCheckbox from "./FormCheckbox";
   export default {
     name: "FormOptions",
-    components: {FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
+    components: {FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
         width: {
@@ -81,6 +92,12 @@
             {text: 'gif', value: 'gif'},
             {text: 'png', value: 'png'},
           ],
+        },
+        texture: {
+          label: `Текстура`,
+          checkboxText: `добавить`,
+          name: `texture`,
+
         },
       }
     },
