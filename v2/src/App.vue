@@ -11,6 +11,7 @@
             :text="textUserInstruction"
             v-if="!this.$store.getters.getIsUserSendForm"
           />
+          <PictureBlock/>
         </b-col>
       </b-row>
     </b-container>
@@ -21,9 +22,11 @@
 
 import FormOptions from "./components/FormOptions";
 import UserInstruction from "./components/UserInstruction";
+import PictureBlock from "./components/PictureBlock";
 export default {
   name: 'App',
   components: {
+    PictureBlock,
     UserInstruction,
     FormOptions,
   },
