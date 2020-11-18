@@ -10,6 +10,7 @@
                 :checked="checked"
                 :name="name"
                 class="text-left"
+                @change="$emit('change', $event)"
         >
             {{checkboxText}}
         </b-form-checkbox>

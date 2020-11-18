@@ -47,6 +47,7 @@
             :generatedId="generateId()"
             :checked="texture.isChecked"
             :name="texture.name"
+            @change="onSelectTexture"
         >
 
         </FormCheckbox>
@@ -71,13 +72,6 @@
     components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        texture: {
-          label: `Текстура`,
-          checkboxText: `добавить`,
-          name: `texture`,
-          isChecked: this.$store.state.options.texture,
-
-        },
         buttonSubmit: {
             label: `Создать картинку`,
             invalidMessage: `заполните обязательные поля`,
@@ -125,6 +119,14 @@
           ],
         }
       },
+      texture() {
+        return {
+          label: `Текстура`,
+          checkboxText: `добавить`,
+          name: `texture`,
+          isChecked: this.$store.state.options.texture,
+        }
+      },
     },
     methods: {
       generateId(){
@@ -162,6 +164,9 @@
       },
       onSelectExensions(selectedExtension){
         this.$store.commit('setExtension', selectedExtension)
+      },
+      onSelectTexture(isSelected){
+        this.$store.commit('setTexture', isSelected )
       },
       onSubmit(){
         const isValid = this.isValidData(this.width, this.height, this.text)
