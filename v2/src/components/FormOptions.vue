@@ -71,9 +71,6 @@
     components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        color: {
-          value: this.$store.state.options.color,
-        },
         text: {
           value: this.$store.state.options.text,
           isValid: true, //не обязательное поле для заполнения
@@ -119,6 +116,11 @@
           maxValue: 5000,
         }
       },
+      color() {
+        return {
+          value: this.$store.state.options.color,
+        }
+      },
     },
     methods: {
       generateId(){
@@ -145,7 +147,7 @@
 
       },
       onSelectColor(color){
-        this.color.value = color
+        this.$store.commit('setColor', color)
       },
       onInputText(text){
         this.text.value = text
