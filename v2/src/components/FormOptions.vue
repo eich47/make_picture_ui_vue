@@ -12,7 +12,7 @@
     <FormInputNumber
             :label="'Высота'"
             :generatedId="generateId()"
-            :value="startHeight"
+            :value="height.value"
             @input="onInputHeight"
             :isValidValueEnteredUser="height.isValid"
             :invalidMessage="height.invalidMessage"
@@ -71,12 +71,6 @@
     components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        height: {
-          value: 0,
-          isValid: false, //обязательное поле
-          invalidMessage: ``,
-          maxValue: 5000,
-        },
         color: {
           value: this.$store.state.options.color,
         },
@@ -109,15 +103,20 @@
       }
     },
     computed: {
-      startHeight(){
-        return this.$store.state.options.height
-      },
       width() {
         return {
             value: this.$store.state.options.width,
             isValid: false, //обязательное поле
             invalidMessage: ``,
             maxValue: 5000,
+        }
+      },
+      height() {
+        return {
+          value: this.$store.state.options.height,
+          isValid: false, //обязательное поле
+          invalidMessage: ``,
+          maxValue: 5000,
         }
       },
     },
@@ -138,7 +137,7 @@
       },
       onInputHeight(value){
         this.height.isValid = true
-        this.height.value = value
+        this.$store.commit('setHeight', Number(value))
 
         const {isValid, invalidMessage} = this.validationNumber(value, this.height)
         this.height.isValid = isValid
