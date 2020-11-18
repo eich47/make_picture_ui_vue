@@ -71,14 +71,6 @@
     components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        extension:{
-          selected: this.$store.state.options.extension,
-          options: [
-            {text: 'jpg', value: 'jpg'},
-            {text: 'gif', value: 'gif'},
-            {text: 'png', value: 'png'},
-          ],
-        },
         texture: {
           label: `Текстура`,
           checkboxText: `добавить`,
@@ -123,6 +115,16 @@
           maxValue: 200,
         }
       },
+      extension() {
+        return {
+          selected: this.$store.state.options.extension,
+          options: [
+            {text: 'jpg', value: 'jpg'},
+            {text: 'gif', value: 'gif'},
+            {text: 'png', value: 'png'},
+          ],
+        }
+      },
     },
     methods: {
       generateId(){
@@ -159,7 +161,7 @@
         this.text.invalidMessage = invalidMessage
       },
       onSelectExensions(selectedExtension){
-        this.extension.selected = selectedExtension
+        this.$store.commit('setExtension', selectedExtension)
       },
       onSubmit(){
         const isValid = this.isValidData(this.width, this.height, this.text)
