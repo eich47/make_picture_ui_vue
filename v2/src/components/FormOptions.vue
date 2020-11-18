@@ -75,7 +75,7 @@
         buttonSubmit: {
             label: `Создать картинку`,
             invalidMessage: `заполните обязательные поля`,
-            isValidData: true,
+            isValidData: true, //показать ли сообщение о необходимости заполнить поля
         },
       }
     },
@@ -170,6 +170,8 @@
       },
       onSubmit(){
         const isValid = this.isValidData(this.width, this.height, this.text)
+        this.$store.commit('setIsValidData', isValid)
+
         if(isValid){
           console.log('valid');
         } else {
