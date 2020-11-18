@@ -7,6 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLoading: false, //загрузка картинки
+    isUserSendForm: false, //создал ли пользователь хоть одну картинку,
+                          // на основании этого некоторые сообщения показываются 1 раз.
     options:{
       width: 0,
       height: 0,
@@ -42,6 +44,9 @@ export default new Vuex.Store({
     setIsLoading(state, payload){
       state.isLoading = payload
     },
+    setIsUserSendForm(state, payload){
+      state.isUserSendForm = payload
+    },
   },
   actions: {
   },
@@ -52,8 +57,10 @@ export default new Vuex.Store({
       if(state.isLoading){
         return new UrlMaker(state.options).buildUrl()
       }
-      
       return false
+    },
+    getIsUserSendForm: state => {
+      return state.isUserSendForm
     },
   },
 })

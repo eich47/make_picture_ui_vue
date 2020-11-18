@@ -9,6 +9,7 @@
         <b-col>
           <UserInstruction
             :text="textUserInstruction"
+            v-if="!this.$store.getters.getIsUserSendForm"
           />
         </b-col>
       </b-row>

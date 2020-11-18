@@ -174,6 +174,7 @@
 
         if(isValid){
           console.log('valid');
+          this.$store.commit('setIsUserSendForm', true)
           this.$store.commit('setIsLoading', true)
         } else {
           console.log('no valid');
