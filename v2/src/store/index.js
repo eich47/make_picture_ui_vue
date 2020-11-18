@@ -18,25 +18,25 @@ export default new Vuex.Store({
   },
   mutations: {
     setWidth(state, payload){
-      state.width = payload
+      state.options.width = payload
     },
     setHeight(state, payload){
-      state.height = payload
+      state.options.height = payload
     },
     setColor(state, payload){
-      state.color = payload
+      state.options.color = payload
     },
     setText(state, payload){
-      state.text = payload
+      state.options.text = payload
     },
     setExtension(state, payload){
-      state.extension = payload
+      state.options.extension = payload
     },
     setTexture(state, payload){
-      state.texture = payload
+      state.options.texture = payload
     },
     setIsValidData(state, payload){
-      state.isValidAllData = payload
+      state.options.isValidAllData = payload
     },
   },
   actions: {
