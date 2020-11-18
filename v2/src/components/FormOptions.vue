@@ -45,7 +45,7 @@
             :label="texture.label"
             :checkboxText="texture.checkboxText"
             :generatedId="generateId()"
-            :checked="false"
+            :checked="texture.isChecked"
             :name="texture.name"
         >
 
@@ -84,16 +84,16 @@
           maxValue: 5000,
         },
         color: {
-          value: `#c0c0c0`,
+          value: this.$store.state.options.color,
         },
         text: {
-          value: ``,
+          value: this.$store.state.options.text,
           isValid: true, //не обязательное поле для заполнения
           invalidMessage: ``,
           maxValue: 200,
         },
         extension:{
-          selected: 'jpg',
+          selected: this.$store.state.options.extension,
           options: [
             {text: 'jpg', value: 'jpg'},
             {text: 'gif', value: 'gif'},
@@ -104,6 +104,7 @@
           label: `Текстура`,
           checkboxText: `добавить`,
           name: `texture`,
+          isChecked: this.$store.state.options.texture,
 
         },
         buttonSubmit: {
@@ -116,11 +117,10 @@
     computed: {
       //начальное значение при загрузке формы
       startWidth() {
-        //потом будет забираться из store
-        return 0
+        return this.$store.state.options.width
       },
       startHeight(){
-        return 0
+        return this.$store.state.options.height
       },
     },
     methods: {
