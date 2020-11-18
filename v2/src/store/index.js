@@ -38,6 +38,9 @@ export default new Vuex.Store({
     setIsValidData(state, payload){
       state.options.isValidAllData = payload
     },
+    setIsLoading(state, payload){
+      state.isLoading = payload
+    },
   },
   actions: {
   },

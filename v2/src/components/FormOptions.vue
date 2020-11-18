@@ -174,6 +174,7 @@
 
         if(isValid){
           console.log('valid');
+          this.$store.commit('setIsLoading', true)
         } else {
           console.log('no valid');
           this.buttonSubmit.isValidData = false
