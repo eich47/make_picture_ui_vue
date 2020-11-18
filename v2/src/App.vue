@@ -6,7 +6,11 @@
         <b-col md="5">
           <FormOptions/>
         </b-col>
-        <b-col></b-col>
+        <b-col>
+          <UserInstruction
+            :text="textUserInstruction"
+          />
+        </b-col>
       </b-row>
     </b-container>
   </div>
@@ -15,10 +19,17 @@
 <script>
 
 import FormOptions from "./components/FormOptions";
+import UserInstruction from "./components/UserInstruction";
 export default {
   name: 'App',
   components: {
+    UserInstruction,
     FormOptions,
+  },
+  data(){
+    return {
+      textUserInstruction: `Выберите параметры и нажмите на кнопку "получить картинку"`,
+    }
   },
 }
 </script>
