@@ -3,7 +3,7 @@
     <FormInputNumber
         :label="'Ширина'"
         :generatedId="generateId()"
-        :value="startWidth"
+        :value="width.value"
         @input="onInputWidth"
         :isValidValueEnteredUser="width.isValid"
         :invalidMessage="width.invalidMessage"
@@ -71,12 +71,6 @@
     components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        width: {
-          value: 0,
-          isValid: false, //обязательное поле
-          invalidMessage: ``,
-          maxValue: 5000,
-        },
         height: {
           value: 0,
           isValid: false, //обязательное поле
@@ -115,12 +109,16 @@
       }
     },
     computed: {
-      //начальное значение при загрузке формы
-      startWidth() {
-        return this.$store.state.options.width
-      },
       startHeight(){
         return this.$store.state.options.height
+      },
+      width() {
+        return {
+            value: this.$store.state.options.width,
+            isValid: false, //обязательное поле
+            invalidMessage: ``,
+            maxValue: 5000,
+        }
       },
     },
     methods: {
@@ -130,8 +128,8 @@
       onInputWidth(value){
         //скроем ошибки
         this.width.isValid = true
-        //потом будет записываться в стор
-        this.width.value = value
+        value = Number(value)
+        this.$store.commit('setWidth', value)
 
         const {isValid, invalidMessage} = this.validationNumber(value, this.width);
         this.width.isValid = isValid
