@@ -71,12 +71,6 @@
     components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        text: {
-          value: this.$store.state.options.text,
-          isValid: true, //не обязательное поле для заполнения
-          invalidMessage: ``,
-          maxValue: 200,
-        },
         extension:{
           selected: this.$store.state.options.extension,
           options: [
@@ -121,6 +115,14 @@
           value: this.$store.state.options.color,
         }
       },
+      text() {
+        return {
+          value: this.$store.state.options.text,
+          isValid: true, //не обязательное поле для заполнения
+          invalidMessage: ``,
+          maxValue: 200,
+        }
+      },
     },
     methods: {
       generateId(){
@@ -150,8 +152,7 @@
         this.$store.commit('setColor', color)
       },
       onInputText(text){
-        this.text.value = text
-        console.log(text);
+        this.$store.commit('setText', text)
         this.text.isValid = true
         const {isValid, invalidMessage} = this.validationText(text, this.text)
         this.text.isValid = isValid
