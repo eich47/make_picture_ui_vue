@@ -176,6 +176,13 @@
           console.log('valid');
           this.$store.commit('setIsUserSendForm', true)
           this.$store.commit('setIsLoading', true)
+          this.$store.dispatch('loadImage')
+            .catch((error) => {
+              console.log(`Error onload picture, src= ${error}`);
+            })
+            .finally( () =>{
+              this.$store.commit('setIsLoading', false)
+          })
         } else {
           console.log('no valid');
           this.buttonSubmit.isValidData = false

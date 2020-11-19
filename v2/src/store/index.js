@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import UrlMaker from "../util/UrlMaker";
+import picture from "./modules/picture";
 
 Vue.use(Vuex)
 
@@ -9,6 +10,7 @@ export default new Vuex.Store({
     isLoading: false, //загрузка картинки
     isUserSendForm: false, //создал ли пользователь хоть одну картинку,
                           // на основании этого некоторые сообщения показываются 1 раз.
+    url: "", //для обращения к апи
     options:{
       width: 0,
       height: 0,
@@ -47,17 +49,20 @@ export default new Vuex.Store({
     setIsUserSendForm(state, payload){
       state.isUserSendForm = payload
     },
+    setUrl(state){
+      const url = new UrlMaker(state.options).buildUrl()
+      const urlString = url.toString()
+      state.url = urlString
+    },
   },
   actions: {
   },
   modules: {
+    picture,
   },
   getters: {
     getUrl: state => {
-      if(state.isLoading){
-        return new UrlMaker(state.options).buildUrl()
-      }
-      return false
+      return state.url
     },
     getIsUserSendForm: state => {
       return state.isUserSendForm

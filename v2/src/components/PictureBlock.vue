@@ -10,6 +10,7 @@
 
         <PictureLoaded
             v-if="isLoaded"
+            :src-img="getUrl"
         >
 
         </PictureLoaded>
@@ -25,15 +26,14 @@
     name: "PictureBlock",
     components: {PictureStubProcess, PictureStubBefore, PictureLoaded},
     computed: {
-      isLoading() {
-        return this.$store.state.isLoading
-      },
       isProcess(){
-        return this.$store.state.isLoading
+        return this.$store.state.picture.isStartLoadingImage
       },
       isLoaded(){
-        //TODO определеть момент окончание загрузки картинки
-        return false
+        return this.$store.state.picture.isLoadedSuccess
+      },
+      getUrl(){
+          return this.$store.getters.getUrl
       },
     },
   }
