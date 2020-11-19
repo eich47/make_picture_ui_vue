@@ -1,8 +1,5 @@
 <template>
     <div class="block-height">
-        <PictureStubBefore
-            v-if="! this.$store.getters.getIsUserSendForm"
-        />
 
         <PictureStubProcess
             v-if="isProcess"
@@ -20,11 +17,10 @@
 
 <script>
   import PictureLoaded from "./PictureLoaded";
-  import PictureStubBefore from "./PictureStubBefore";
   import PictureStubProcess from "./PictureStubProcess";
   export default {
     name: "PictureBlock",
-    components: {PictureStubProcess, PictureStubBefore, PictureLoaded},
+    components: {PictureStubProcess, PictureLoaded},
     computed: {
       isProcess(){
         return this.$store.state.picture.isStartLoadingImage
