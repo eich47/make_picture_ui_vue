@@ -1,7 +1,10 @@
 <template>
-    <div>
-        загружаем...
-    </div>
+        <div class="d-flex align-items-center flex-column">
+            <strong>Загрузка...</strong>
+            <b-spinner
+                variant="primary"
+            ></b-spinner>
+        </div>
 </template>
 
 <script>
