@@ -1,7 +1,9 @@
 <template>
     <div>
-        загруженная картинка
-        <img :src="srcImg" alt="some image">
+        <b-img
+            :src="srcImg"
+            :alt="srcImg"
+        />
     </div>
 </template>
 
