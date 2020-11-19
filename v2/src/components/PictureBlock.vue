@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="block-height">
         <PictureStubBefore
             v-if="! this.$store.getters.getIsUserSendForm"
         />
@@ -40,5 +40,7 @@
 </script>
 
 <style scoped>
-
+    .block-height{
+        height: 370px;
+    }
 </style>
