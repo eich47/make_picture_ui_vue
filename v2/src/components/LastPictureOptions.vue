@@ -2,9 +2,10 @@
     <b-col
         md="6"
         xl="4"
+        class="py-3"
     >
         <b-list-group tag="ul">
-            <b-list-group-item tag="li">
+            <b-list-group-item tag="li" class="text-center">
                 {{size}}
             </b-list-group-item>
 

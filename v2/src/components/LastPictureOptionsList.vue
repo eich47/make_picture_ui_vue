@@ -8,7 +8,7 @@
                 <p>Вы также можете загрузить параметры ранее созданных картинок</p>
             </b-col>
         </b-row>
-        <b-row class="mt-3">
+        <b-row>
             <LastPictureOptions
                     v-for="options in lastOptionsList"
                     :key="options.id"
