@@ -1,7 +1,11 @@
 <template>
-    <LastPictureOptions
-
-    ></LastPictureOptions>
+    <b-row>
+        <LastPictureOptions
+                v-for="options in lastOptionsList"
+                :key="options.id"
+                :options="options"
+        ></LastPictureOptions>
+    </b-row>
 </template>
 
 <script>
@@ -11,7 +15,7 @@
     components: {LastPictureOptions},
     computed: {
       lastOptionsList(){
-        return this.$store.lastPicture.lastPicturesList
+        return this.$store.state.lastPicture.lastPictureList
       },
     },
   }
