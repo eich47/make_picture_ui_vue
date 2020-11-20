@@ -1,17 +1,33 @@
 <template>
-    <div class="block-height">
+    <div>
+        <div class="block-height">
 
-        <PictureStubProcess
-            v-if="isProcess"
-        />
+            <PictureStubProcess
+                    v-if="isProcess"
+            />
 
-        <PictureLoaded
-            v-if="isLoaded"
-            :src-img="getUrl"
-        >
+            <PictureLoaded
+                    v-if="isLoaded"
+                    :src-img="getUrl"
+            >
 
-        </PictureLoaded>
+            </PictureLoaded>
+        </div>
+
+        <template v-if="isLoaded">
+        <p class="mt-3">
+            Чтобы сохранить картинку, нажмите на ней правой кнопкой мыши
+            и выберите подходящий пункт меню.
+        </p>
+        <p>
+            Вы также можете открыть картинку в новой вкладке кликнув
+            по ссылке <a href="#"
+                         @click.prevent="onClick"
+                      >открыть</a>
+        </p>
+        </template>
     </div>
+
 
 </template>
 
@@ -30,6 +46,16 @@
       },
       getUrl(){
           return this.$store.getters.getUrl
+      },
+    },
+    methods: {
+      onClick(){
+        let link = document.createElement('a')
+        link.setAttribute('href', this.getUrl)
+        link.setAttribute('target', '_blank')
+        document.body.appendChild(link)
+        link.click()
+        link.remove()
       },
     },
   }
