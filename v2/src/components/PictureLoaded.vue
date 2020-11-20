@@ -1,8 +1,10 @@
 <template>
-    <div>
+    <div class="mt-2">
         <b-img
             :src="srcImg"
             :alt="srcImg"
+            fluid
+            center="true"
         />
     </div>
 </template>
