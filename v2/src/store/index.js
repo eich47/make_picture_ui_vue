@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import UrlMaker from "../util/UrlMaker";
 import picture from "./modules/picture";
+import lastPicture from "./modules/lastPicture";
 
 Vue.use(Vuex)
 
@@ -59,6 +60,7 @@ export default new Vuex.Store({
   },
   modules: {
     picture,
+    lastPicture,
   },
   getters: {
     getUrl: state => {

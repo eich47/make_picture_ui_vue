@@ -177,6 +177,10 @@
           this.$store.commit('setIsUserSendForm', true)
           this.$store.commit('setIsLoading', true)
           this.$store.dispatch('loadImage')
+            .then(() => {
+              //если картинка успешно создана, сохраним ее параметры в localStore
+              return this.$store.dispatch('saveCurrentPictureOptions')
+            })
             .catch((error) => {
               console.log(`Error onload picture, src= ${error}`);
             })
