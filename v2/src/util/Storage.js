@@ -46,4 +46,23 @@ export default class Storage {
   getJsonFromStorage(key) {
     return localStorage.getItem(key)
   }
+  
+  remove(){
+    //получим опции из localStore в array
+    const optionsFromStorageArray = this.getOption()
+    if (optionsFromStorageArray === false){
+      return false
+    }
+    
+    //оставим все опции кроме переданной
+    const filteredArray = optionsFromStorageArray.filter(o => {
+      return o.id !== this.options.id
+    })
+    
+    //сохраним обратно в storage (перезапишется существующее значение)
+    const optionsJson = JSON.stringify(filteredArray)
+    localStorage.setItem(this.keyInStorage, optionsJson)
+    
+    return true
+  }
 }

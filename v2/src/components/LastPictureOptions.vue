@@ -32,6 +32,7 @@
                 <b-button
                     variant="warning"
                     class="col"
+                    @click="onDelete()"
                 >Удалить</b-button>
             </div>
         </b-list-group>
@@ -56,6 +57,11 @@
       },
       texture(){
         return this.options.texture ? `да` : `нет`
+      },
+    },
+    methods: {
+      onDelete(){
+        this.$store.dispatch('deleteSelectedOptionsFromStorage', this.options)
       },
     },
   }

@@ -6,6 +6,8 @@ const state = () => ({
   isSaveCurrentPictureOptionsFailure: null,
   isLoadSavedOptionsSuccess: null,
   isLoadSavedOptionsFailure: null,
+  isDeleteSelectedOptionsFromStorageSuccess: null,
+  isDeleteSelectedOptionsFromStorageFailure: null,
 })
 
 const mutations = {
@@ -26,6 +28,17 @@ const mutations = {
   },
   loadSavedOptionsFailure(state, payload){
     state.isSaveCurrentPictureOptionsFailure = payload
+  },
+  deleteSelectedOptionsFromList(state, selectedOption) {
+    state.lastPictureList = state.lastPictureList.filter(options => {
+      return options.id !== selectedOption.id
+    })
+  },
+  deleteSelectedOptionsFromStorageSuccess(state, payload) {
+    state.isDeleteSelectedOptionsFromStorageSuccess = payload
+  },
+  deleteSelectedOptionsFromStorageFailure(state, payload) {
+    state.isDeleteSelectedOptionsFromStorageFailure = payload
   },
 }
 
@@ -66,6 +79,18 @@ const actions = {
         
       }
     }))
+  },
+  deleteSelectedOptionsFromStorage(context, selectedOptions){
+    return new Promise((resolve, reject) => {
+      const isSuccess = new Storage(selectedOptions).remove()
+      if (! isSuccess){
+        context.commit('deleteSelectedOptionsFromStorageFailure', true)
+        reject(`Ошибка при удалении ${selectedOptions} из localstorage`)
+      } else {
+        context.commit('deleteSelectedOptionsFromStorageSuccess', true)
+        context.commit('deleteSelectedOptionsFromList', selectedOptions)
+      }
+    })
   },
 }
 
