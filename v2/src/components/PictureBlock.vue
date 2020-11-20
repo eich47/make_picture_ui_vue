@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="block-height">
+        <div class="block-height d-flex justify-content-center align-items-md-center" >
 
             <PictureStubProcess
                     v-if="isProcess"
