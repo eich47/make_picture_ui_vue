@@ -32,6 +32,15 @@ const mutations = {
 const actions = {
   saveCurrentPictureOptions(context) {
     const currentOptions = context.rootState.options
+    //добавим id для объекта с текущими опциями
+    //получим первый элемент из списка опций
+    const firstOptions = context.state.lastPictureList[0]
+    let lastId = 0
+    if (firstOptions !== undefined){
+      lastId = firstOptions.id
+    }
+    currentOptions.id = ++lastId
+    
     return new Promise((resolve, reject) => {
       const result = new Storage(currentOptions).saveOptions()
       if (result){
