@@ -1,12 +1,13 @@
 <template>
-    <div class="mt-2">
+
         <b-img
             :src="srcImg"
             :alt="srcImg"
-            fluid
+
             center="true"
+            class="height"
         />
-    </div>
+
 </template>
 
 <script>
@@ -22,5 +23,7 @@
 </script>
 
 <style scoped>
-
+    .height {
+      max-height: 100%;
+    }
 </style>
