@@ -42,7 +42,7 @@
         return this.$store.state.picture.isStartLoadingImage
       },
       isLoaded(){
-        return this.$store.state.picture.isLoadedSuccess
+        return this.$store.state.picture.isLoadedSuccess && !this.$store.state.isLoading
       },
       getUrl(){
           return this.$store.getters.getUrl
