@@ -9,6 +9,7 @@
                 type="submit"
                 block
                 variant="secondary"
+                :disabled="isDisabled"
         >
             {{label}}
         </b-button>
@@ -31,6 +32,12 @@
       isValidData: {
         type: Boolean,
         required: true,
+      },
+
+    },
+    computed: {
+      isDisabled(){
+        return this.$store.state.isLoading
       },
     },
   }
