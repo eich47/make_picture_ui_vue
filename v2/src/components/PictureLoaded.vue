@@ -4,7 +4,7 @@
             :src="srcImg"
             :alt="srcImg"
 
-            center="true"
+            :center="true"
             class="height"
         />
 
