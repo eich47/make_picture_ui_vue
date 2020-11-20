@@ -18,7 +18,8 @@ const mutations = {
     state.isSaveCurrentPictureOptionsFailure = payload
   },
   addCurrentOptionsToList(state, payload){
-    state.lastPictureList.unshift(payload)
+    const copy = Object.assign({}, payload)
+    state.lastPictureList.unshift(copy)
   },
   addSavedOptionsToList(state, payload){
     state.lastPictureList = state.lastPictureList.concat(payload)
