@@ -4,6 +4,8 @@ const state = () => ({
   lastPictureList: [], //список опций картинок которые создавал пользователь
   isSaveCurrentPictureOptionsSuccess: null,
   isSaveCurrentPictureOptionsFailure: null,
+  isLoadSavedOptionsSuccess: null,
+  isLoadSavedOptionsFailure: null,
 })
 
 const mutations = {
@@ -15,6 +17,15 @@ const mutations = {
   },
   addCurrentOptionsToList(state, payload){
     state.lastPictureList.unshift(payload)
+  },
+  addSaveOptionsToList(state, payload){
+    state.lastPictureList = state.lastPictureList.concat(payload)
+  },
+  loadSavedOptionsSuccess(state, payload){
+    state.isSaveCurrentPictureOptionsSuccess = payload
+  },
+  loadSavedOptionsFailure(state, payload){
+    state.isSaveCurrentPictureOptionsFailure = payload
   },
 }
 
@@ -32,6 +43,20 @@ const actions = {
         reject(`ошибка при работе с хранилищем`)
       }
     })
+  },
+  loadSavedOptions(context){
+    return new Promise(((resolve, reject) => {
+      const result = new Storage(null).getOption()
+      if(result){
+        context.commit('loadSavedOptionsSuccess', true)
+        context.commit('addSaveOptionsToList', result)
+        resolve(`список настроек загружен из localStorage`)
+      } else {
+        context.commit('loadSavedOptionsFailure', true)
+        reject(`Error! не удалось загрузить список из localStorage`)
+        
+      }
+    }))
   },
 }
 

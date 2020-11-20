@@ -12,6 +12,9 @@
             v-if="!this.$store.getters.getIsUserSendForm"
           />
           <PictureBlock/>
+          <LastPictureOptionsList
+            v-if="isHaveLastPictureOptions"
+          />
         </b-col>
       </b-row>
     </b-container>
@@ -23,9 +26,11 @@
 import FormOptions from "./components/FormOptions";
 import UserInstruction from "./components/UserInstruction";
 import PictureBlock from "./components/PictureBlock";
+import LastPictureOptionsList from "./components/LastPictureOptionsList";
 export default {
   name: 'App',
   components: {
+    LastPictureOptionsList,
     PictureBlock,
     UserInstruction,
     FormOptions,
@@ -34,6 +39,15 @@ export default {
     return {
       textUserInstruction: `Выберите параметры и нажмите на кнопку "получить картинку"`,
     }
+  },
+  computed: {
+    isHaveLastPictureOptions() {
+      return this.$store.state.lastPicture.lastPictureList.length > 0
+    },
+  },
+  created() {
+    //загрузим сохранные опции
+    this.$store.dispatch('loadSavedOptions')
   },
 }
 </script>
