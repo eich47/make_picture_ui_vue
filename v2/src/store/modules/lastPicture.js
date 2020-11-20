@@ -20,7 +20,7 @@ const mutations = {
   addCurrentOptionsToList(state, payload){
     state.lastPictureList.unshift(payload)
   },
-  addSaveOptionsToList(state, payload){
+  addSavedOptionsToList(state, payload){
     state.lastPictureList = state.lastPictureList.concat(payload)
   },
   loadSavedOptionsSuccess(state, payload){
@@ -71,7 +71,7 @@ const actions = {
       const result = new Storage(null).getOption()
       if(result){
         context.commit('loadSavedOptionsSuccess', true)
-        context.commit('addSaveOptionsToList', result)
+        context.commit('addSavedOptionsToList', result)
         resolve(`список настроек загружен из localStorage`)
       } else {
         context.commit('loadSavedOptionsFailure', true)
