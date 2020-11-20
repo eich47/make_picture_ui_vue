@@ -20,6 +20,8 @@ export default new Vuex.Store({
       extension: 'jpg',
       texture: false,
       isValidAllData: false, //все ли параметры для картики корректны
+      isWidthValid: false, //обязательное поле
+      isHeightValid: false, //обязательное поле
     },
   },
   mutations: {
@@ -54,6 +56,18 @@ export default new Vuex.Store({
       const url = new UrlMaker(state.options).buildUrl()
       const urlString = url.toString()
       state.url = urlString
+    },
+    setCurrentOptions(state, payload){
+      const clone = Object.assign({}, payload)
+      const res = delete clone.id
+      if (!res){
+        console.log(`не удалось удалить id из объекта ${clone}`);
+      }
+      state.options = clone
+    },
+    setIsFieldValid(state, payload){
+      const {fieldName, value} = payload
+      state.options[fieldName] = value
     },
   },
   actions: {

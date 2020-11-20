@@ -28,6 +28,7 @@
                 <b-button
                    variant="info"
                    class="col"
+                   @click="onLoad"
                 >Загрузить</b-button>
                 <b-button
                     variant="warning"
@@ -62,6 +63,9 @@
     methods: {
       onDelete(){
         this.$store.dispatch('deleteSelectedOptionsFromStorage', this.options)
+      },
+      onLoad(){
+        this.$store.commit('setCurrentOptions', this.options)
       },
     },
   }

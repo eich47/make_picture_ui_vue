@@ -83,7 +83,7 @@
       width() {
         return {
             value: this.$store.state.options.width,
-            isValid: false, //обязательное поле
+            isValid: this.$store.state.options.isWidthValid,
             invalidMessage: ``,
             maxValue: 5000,
         }
@@ -91,7 +91,7 @@
       height() {
         return {
           value: this.$store.state.options.height,
-          isValid: false, //обязательное поле
+          isValid: this.$store.state.options.isHeightValid,
           invalidMessage: ``,
           maxValue: 5000,
         }
@@ -139,7 +139,11 @@
         this.$store.commit('setWidth', value)
 
         const {isValid, invalidMessage} = this.validationNumber(value, this.width);
-        this.width.isValid = isValid
+        //запишем в store резьтат валидации
+        this.$store.commit('setIsFieldValid', {
+          fieldName: 'isWidthValid',
+          value: isValid,
+        })
         this.width.invalidMessage = invalidMessage
 
       },
@@ -148,7 +152,10 @@
         this.$store.commit('setHeight', Number(value))
 
         const {isValid, invalidMessage} = this.validationNumber(value, this.height)
-        this.height.isValid = isValid
+        this.$store.commit('setIsFieldValid', {
+          fieldName: 'isHeightValid',
+          value: isValid,
+        })
         this.height.invalidMessage = invalidMessage
 
       },
