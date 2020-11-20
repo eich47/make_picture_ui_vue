@@ -6,7 +6,7 @@
         <b-col md="5">
           <FormOptions/>
         </b-col>
-        <b-col>
+        <b-col md="7">
           <UserInstruction
             :text="textUserInstruction"
             v-if="!this.$store.getters.getIsUserSendForm"
