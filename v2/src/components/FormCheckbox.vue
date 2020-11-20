@@ -4,6 +4,7 @@
         label-align="left"
         label-cols-sm="2"
         label-cols-md="3"
+        label-class="py-0"
     >
         <b-form-checkbox
                 :id="generatedId"
