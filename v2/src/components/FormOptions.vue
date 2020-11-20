@@ -1,5 +1,8 @@
 <template>
     <b-form @submit.prevent="onSubmit" :novalidate="true">
+    <BaseTitleForSection
+        text="Задайте ширину и высоту картинки"
+    />
     <FormInputNumber
         :label="'Ширина'"
         :generatedId="generateId()"
@@ -18,6 +21,9 @@
             :invalidMessage="height.invalidMessage"
     />
         <!--цвет картинки-->
+        <BaseTitleForSection
+                text="Выберите цвет"
+        />
         <FormSelectColor
             :label="'Цвет'"
             :generatedId="generateId()"
@@ -25,6 +31,9 @@
             @input="onSelectColor"
         ></FormSelectColor>
         <!--текст для картинки-->
+        <BaseTitleForSection
+                text="Задайте текст (не обязательно)"
+        />
         <FormInputText
             :label="'Текст'"
             :generatedId="generateId()"
@@ -34,6 +43,9 @@
             :invalidMessage="text.invalidMessage"
         ></FormInputText>
         <!--выбор расширения файла-->
+        <BaseTitleForSection
+                text="Выберите расширение файла"
+        />
         <FormRadioButton
             :label="'Тип файла'"
             :options="extension.options"
@@ -41,6 +53,9 @@
             @change="onSelectExensions"
         ></FormRadioButton>
 <!--        выбор текстуры-->
+        <BaseTitleForSection
+                text="Добавьте текстуру (не обязательно)"
+        />
         <FormCheckbox
             :label="texture.label"
             :checkboxText="texture.checkboxText"
@@ -67,9 +82,12 @@
   import FormRadioButton from "./FormRadioButton";
   import FormCheckbox from "./FormCheckbox";
   import FormButtonSubmit from "./FormButtonSubmit";
+  import BaseTitleForSection from "./BaseTitleForSection";
   export default {
     name: "FormOptions",
-    components: {FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
+    components: {
+      BaseTitleForSection,
+      FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
         buttonSubmit: {
