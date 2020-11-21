@@ -152,7 +152,10 @@
       },
       onInputWidth(value){
         //скроем ошибки
-        this.width.isValid = true
+        this.$store.commit('setIsFieldValid', {
+          fieldName: 'isWidthValid',
+          value: true,
+        })
         value = Number(value)
         this.$store.commit('setWidth', value)
 
@@ -166,7 +169,10 @@
 
       },
       onInputHeight(value){
-        this.height.isValid = true
+        this.$store.commit('setIsFieldValid', {
+          fieldName: 'isHeightValid',
+          value: true,
+        })
         this.$store.commit('setHeight', Number(value))
 
         const {isValid, invalidMessage} = this.validationNumber(value, this.height)
