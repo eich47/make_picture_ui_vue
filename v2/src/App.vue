@@ -12,9 +12,13 @@
             v-if="!this.$store.getters.getIsUserSendForm"
           />
           <PictureBlock/>
+
+          <transition name="last-pictures">
           <LastPictureOptionsList
             v-if="isHaveLastPictureOptions"
           />
+          </transition>
+
         </b-col>
       </b-row>
     </b-container>
@@ -53,5 +57,16 @@ export default {
 </script>
 
 <style>
-
+    .last-pictures-enter{
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    .last-pictures-leave-to{
+        transform: translateX(1000px);
+        opacity: 0;
+    }
+    .last-pictures-enter-active,
+    .last-pictures-leave-active{
+        transition: all 1s;
+    }
 </style>

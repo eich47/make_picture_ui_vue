@@ -8,13 +8,13 @@
                 <p>Вы также можете загрузить параметры ранее созданных картинок</p>
             </b-col>
         </b-row>
-        <b-row>
+            <transition-group name="last" tag="div" class="row">
             <LastPictureOptions
                     v-for="options in lastOptionsList"
                     :key="options.id"
                     :options="options"
             ></LastPictureOptions>
-        </b-row>
+            </transition-group>
     </div>
 </template>
 
@@ -32,5 +32,21 @@
 </script>
 
 <style scoped>
-
+    .last-enter,
+    .last-leave-to{
+        opacity: 0;
+    }
+    .last-enter{
+        transform: translateY(-30px);
+    }
+    .last-leave-to{
+        transform: translateY(30px);
+    }
+    .last-enter-active,
+    .last-leave-active{
+        transition: all .3s;
+    }
+    .last-move{
+        transition: transform 1s;
+    }
 </style>
