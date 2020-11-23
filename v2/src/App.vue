@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <b-container class="mt-3">
+    <b-container>
+      <b-navbar
+        type="dark"
+        variant="secondary"
+      >
+        <b-navbar-brand>Креатива нет :)</b-navbar-brand>
+        <ContactBlock/>
+      </b-navbar>
       <h1 class="h3 text-center mb-3">Создание картинки по параметрам</h1>
       <b-row>
         <b-col md="5">
@@ -31,9 +38,11 @@ import FormOptions from "./components/FormOptions";
 import UserInstruction from "./components/UserInstruction";
 import PictureBlock from "./components/PictureBlock";
 import LastPictureOptionsList from "./components/LastPictureOptionsList";
+import ContactBlock from "./components/ContactBlock";
 export default {
   name: 'App',
   components: {
+    ContactBlock,
     LastPictureOptionsList,
     PictureBlock,
     UserInstruction,
