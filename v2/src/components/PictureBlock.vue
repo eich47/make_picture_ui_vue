@@ -69,7 +69,7 @@
 
 <style scoped>
     .block-height{
-        height: 370px;
+        height: 240px;
     }
 
     /*появление*/
