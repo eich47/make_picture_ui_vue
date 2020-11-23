@@ -41,7 +41,7 @@ export default {
   },
   data(){
     return {
-      textUserInstruction: `Выберите параметры и нажмите на кнопку "получить картинку"`,
+      textUserInstruction: `Выберите параметры и нажмите на кнопку "создать картинку"`,
     }
   },
   computed: {
