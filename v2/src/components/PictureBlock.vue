@@ -73,24 +73,16 @@
     }
 
     /*появление*/
-    .picture-loaded-enter{
+    .picture-loaded-enter,
+    .picture-loaded-leave-to{
         opacity: 0;
     }
     .picture-loaded-enter-active{
         transition: opacity .5s ease;
     }
-    .picture-loaded-enter-to{
-        opacity: 1;
-    }
     /*скрытие*/
-    .picture-loaded-leave{
-        opacity: 1;
-    }
     .picture-loaded-leave-active{
         transition: opacity .1s linear;
-    }
-    .picture-loaded-leave-to{
-        opacity: 0;
     }
 
     /*анимация для текста*/
