@@ -1,6 +1,6 @@
 export default class Storage {
   
-  keyInStorage = 'pictureOptions'
+  keyInStorage = 'pictureOptionsV2'
   
   constructor(options){
     this.options = options
