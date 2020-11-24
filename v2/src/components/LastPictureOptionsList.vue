@@ -4,7 +4,7 @@
             <b-col cols="12">
                 <h3 class="h5">Последние созданные картинки: </h3>
             </b-col>
-            <b-col cols="12" class="order-first mt-3">
+            <b-col cols="12" class="order-first">
                 <p>Вы также можете загрузить параметры ранее созданных картинок</p>
             </b-col>
         </b-row>
