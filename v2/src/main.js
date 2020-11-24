@@ -11,7 +11,6 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
-document.title = 'Создание картинки по параметрам'
 
 new Vue({
   store,
