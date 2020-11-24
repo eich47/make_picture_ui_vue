@@ -156,9 +156,9 @@
           fieldName: 'isWidthValid',
           value: true,
         })
-        value = Number(value)
-        this.$store.commit('setWidth', value)
 
+        this.$store.commit('setWidth', value)
+        value = Number(value)
         const {isValid, invalidMessage} = this.validationNumber(value, this.width);
         //запишем в store резьтат валидации
         this.$store.commit('setIsFieldValid', {
@@ -173,8 +173,8 @@
           fieldName: 'isHeightValid',
           value: true,
         })
-        this.$store.commit('setHeight', Number(value))
-
+        this.$store.commit('setHeight', value)
+        value = Number(value)
         const {isValid, invalidMessage} = this.validationNumber(value, this.height)
         this.$store.commit('setIsFieldValid', {
           fieldName: 'isHeightValid',
