@@ -1,11 +1,11 @@
 <template>
     <div :class="{ marginToNotJump: this.$store.getters.getIsUserSendForm}">
         <div class="block-height d-flex justify-content-center align-items-md-center" >
-
+            <transition name="picture-loaded" mode="out-in">
             <PictureStubProcess
                     v-if="isProcess"
             />
-            <transition name="picture-loaded">
+
             <PictureLoaded
                     v-if="isLoaded"
                     :src-img="getUrl"
@@ -45,7 +45,7 @@
     components: {PictureStubProcess, PictureLoaded},
     computed: {
       isProcess(){
-        return this.$store.state.picture.isStartLoadingImage
+        return this.$store.state.isLoading
       },
       isLoaded(){
         return this.$store.state.picture.isLoadedSuccess && !this.$store.state.isLoading
@@ -73,16 +73,11 @@
     }
 
     /*появление*/
-    .picture-loaded-enter,
-    .picture-loaded-leave-to{
+    .picture-loaded-enter{
         opacity: 0;
     }
     .picture-loaded-enter-active{
         transition: opacity .5s ease;
-    }
-    /*скрытие*/
-    .picture-loaded-leave-active{
-        transition: opacity .1s linear;
     }
 
     /*анимация для текста*/
