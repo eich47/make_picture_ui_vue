@@ -22,6 +22,7 @@ export default new Vuex.Store({
       isValidAllData: false, //все ли параметры для картики корректны
       isWidthValid: false, //обязательное поле
       isHeightValid: false, //обязательное поле
+      maxWidth: 5000, //максимальная ширина картинки
     },
   },
   mutations: {

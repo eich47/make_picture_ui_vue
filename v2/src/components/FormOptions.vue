@@ -103,7 +103,7 @@
             value: this.$store.state.options.width,
             isValid: this.$store.state.options.isWidthValid,
             invalidMessage: ``,
-            maxValue: 5000,
+            maxValue: this.$store.state.options.maxWidth,
         }
       },
       height() {
@@ -111,7 +111,7 @@
           value: this.$store.state.options.height,
           isValid: this.$store.state.options.isHeightValid,
           invalidMessage: ``,
-          maxValue: 5000,
+          maxValue: this.$store.state.options.maxWidth,
         }
       },
       color() {
@@ -234,10 +234,11 @@
           isValid: true,
           invalidMessage: ``,
         }
+        const maxWidth = this.$store.state.options.maxWidth
         if (value <= 0){
           validationResult.isValid = false
           validationResult.invalidMessage = `Введите корректное значение (макс. ${maxValue})`
-        } else if( value > 5000 ){
+        } else if( value > maxWidth ){
           validationResult.isValid = false
           validationResult.invalidMessage = `Максимальный размер ${maxValue}`
         }
