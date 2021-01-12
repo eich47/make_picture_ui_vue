@@ -110,7 +110,7 @@
         return {
           value: this.$store.state.options.height,
           isValid: this.$store.state.options.isHeightValid,
-          invalidMessage: ``,
+          invalidMessage: this.$store.state.options.heightErrorMessage,
           maxValue: this.$store.state.options.maxWidth,
         }
       },
@@ -154,18 +154,19 @@
         this.$store.dispatch('checkWidth', value)
       },
       onInputHeight(value){
-        this.$store.commit('setIsFieldValid', {
-          fieldName: 'isHeightValid',
-          value: true,
-        })
-        this.$store.commit('setHeight', value)
-        value = Number(value)
-        const {isValid, invalidMessage} = this.validationNumber(value, this.height)
-        this.$store.commit('setIsFieldValid', {
-          fieldName: 'isHeightValid',
-          value: isValid,
-        })
-        this.height.invalidMessage = invalidMessage
+        this.$store.dispatch('checkHeight', value)
+        // this.$store.commit('setIsFieldValid', {
+        //   fieldName: 'isHeightValid',
+        //   value: true,
+        // })
+        // this.$store.commit('setHeight', value)
+        // value = Number(value)
+        // const {isValid, invalidMessage} = this.validationNumber(value, this.height)
+        // this.$store.commit('setIsFieldValid', {
+        //   fieldName: 'isHeightValid',
+        //   value: isValid,
+        // })
+        // this.height.invalidMessage = invalidMessage
 
       },
       onSelectColor(color){

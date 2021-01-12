@@ -23,8 +23,9 @@ export default new Vuex.Store({
       isValidAllData: false, //все ли параметры для картики корректны
       isWidthValid: false, //обязательное поле
       isHeightValid: false, //обязательное поле
-      maxWidth: 5000, //максимальная ширина картинки
+      maxWidth: 5000, //максимальная ширина/высота картинки
       widthErrorMessage: ``, //текст ошибки если значение ширины картинки не валидное
+      heightErrorMessage: ``, //текст ошибки если значение высоты картинки не валидное
     },
   },
   mutations: {
@@ -76,6 +77,11 @@ export default new Vuex.Store({
     setWidthErrorMessage(state, payload){
       state.options.widthErrorMessage = payload
     },
+    //сообщение о некорректном значении для высоты
+    setHeightErrorMessage(state, payload){
+      state.options.heightErrorMessage = payload
+    },
+    
   },
   actions: {
     checkWidth(context, width){
@@ -90,6 +96,20 @@ export default new Vuex.Store({
         value: result.isValid,
       })
       context.commit('setWidthErrorMessage', result.invalidMessage)
+    },
+    //ширина картинки
+    checkHeight(context, height){
+      //добавим в state введнное пользователем значение
+      context.commit('setHeight', height)
+      //провалидируем введенное пользователем значение
+      const maxWidth = context.state.options.maxWidth
+      const result = new Validation().validationNumber(height, {maxValue: maxWidth})
+  
+      context.commit('setIsFieldValid', {
+        fieldName: 'isHeightValid',
+        value: result.isValid,
+      })
+      context.commit('setHeightErrorMessage', result.invalidMessage)
     },
   },
   modules: {
