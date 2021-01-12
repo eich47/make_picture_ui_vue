@@ -3,7 +3,10 @@ import Vuex from 'vuex'
 import UrlMaker from "../util/UrlMaker";
 import picture from "./modules/picture";
 import lastPicture from "./modules/lastPicture";
-import Validation from "../util/Validation";
+import Validator from "../util/Validator";
+import WidthIsCorrectValidation from "../util/validatorCases/WidthIsCorrectValidation";
+import WidthMaxValueValidation from "../util/validatorCases/WidthMaxValueValidation";
+import MaxLengthTextValidation from "../util/validatorCases/MaxLengthTextValidation";
 
 Vue.use(Vuex)
 
@@ -96,7 +99,10 @@ export default new Vuex.Store({
       context.commit('setWidth', width)
       //провалидируем введенное пользователем значение
       const maxWidth = context.state.options.maxWidth
-      const result = new Validation().validationNumber(width, {maxValue: maxWidth})
+      const result = new Validator([
+        new WidthIsCorrectValidation(width, maxWidth),
+        new WidthMaxValueValidation(width, maxWidth),
+      ]).checking()
 
       context.commit('setIsFieldValid', {
         fieldName: 'isWidthValid',
@@ -110,8 +116,10 @@ export default new Vuex.Store({
       context.commit('setHeight', height)
       //провалидируем введенное пользователем значение
       const maxWidth = context.state.options.maxWidth
-      const result = new Validation().validationNumber(height, {maxValue: maxWidth})
-  
+      const result = new Validator([
+        new WidthIsCorrectValidation(height, maxWidth),
+        new WidthMaxValueValidation(height, maxWidth),
+      ]).checking()
       context.commit('setIsFieldValid', {
         fieldName: 'isHeightValid',
         value: result.isValid,
@@ -121,7 +129,9 @@ export default new Vuex.Store({
     checkText(context, text){
       context.commit('setText', text)
       const maxLength = context.state.options.maxLengthText
-      const result = new Validation().validationText(text, {maxValue: maxLength})
+      const result = new Validator([
+        new MaxLengthTextValidation(text, maxLength),
+      ]).checking()
       
       context.commit('setIsFieldValid', {
         fieldName: 'isTextValid',
