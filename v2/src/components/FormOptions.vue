@@ -199,35 +199,6 @@
       isValidData(width, height, text){
         return width.isValid && height.isValid && text.isValid
       },
-      validationNumber(value, {maxValue}){
-        const validationResult = {
-          isValid: true,
-          invalidMessage: ``,
-        }
-        const maxWidth = this.$store.state.options.maxWidth
-        if (value <= 0){
-          validationResult.isValid = false
-          validationResult.invalidMessage = `Введите корректное значение (макс. ${maxValue})`
-        } else if( value > maxWidth ){
-          validationResult.isValid = false
-          validationResult.invalidMessage = `Максимальный размер ${maxValue}`
-        }
-
-        return validationResult
-      },
-
-      validationText(value, {maxValue}){
-        const validationResult = {
-          isValid: true,
-          invalidMessage: ``,
-        }
-        if (value.length > maxValue){
-          validationResult.isValid = false
-          validationResult.invalidMessage = `Максимальное количество символов ${maxValue}`
-        }
-        return validationResult
-      },
-
     },
 
   }
