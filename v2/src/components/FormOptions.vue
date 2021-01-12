@@ -122,9 +122,9 @@
       text() {
         return {
           value: this.$store.state.options.text,
-          isValid: true, //не обязательное поле для заполнения
-          invalidMessage: ``,
-          maxValue: 200,
+          isValid: this.$store.state.options.isTextValid,
+          invalidMessage: this.$store.state.options.textErrorMessage,
+          maxValue: this.$store.state.options.maxLengthText,
         }
       },
       extension() {
@@ -155,29 +155,13 @@
       },
       onInputHeight(value){
         this.$store.dispatch('checkHeight', value)
-        // this.$store.commit('setIsFieldValid', {
-        //   fieldName: 'isHeightValid',
-        //   value: true,
-        // })
-        // this.$store.commit('setHeight', value)
-        // value = Number(value)
-        // const {isValid, invalidMessage} = this.validationNumber(value, this.height)
-        // this.$store.commit('setIsFieldValid', {
-        //   fieldName: 'isHeightValid',
-        //   value: isValid,
-        // })
-        // this.height.invalidMessage = invalidMessage
 
       },
       onSelectColor(color){
         this.$store.commit('setColor', color)
       },
       onInputText(text){
-        this.$store.commit('setText', text)
-        this.text.isValid = true
-        const {isValid, invalidMessage} = this.validationText(text, this.text)
-        this.text.isValid = isValid
-        this.text.invalidMessage = invalidMessage
+        this.$store.dispatch('checkText', text)
       },
       onSelectExensions(selectedExtension){
         this.$store.commit('setExtension', selectedExtension)

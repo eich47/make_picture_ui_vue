@@ -20,6 +20,19 @@ class Validation {
     
     return validationResult
   }
+  
+  validationText(value, {maxValue}){
+    const validationResult = {
+      isValid: true,
+      invalidMessage: ``,
+    }
+    if (value.length > maxValue){
+      validationResult.isValid = false
+      validationResult.invalidMessage = `Максимальное количество символов ${maxValue}`
+    }
+    return validationResult
+  
+  }
 }
 
 export default Validation

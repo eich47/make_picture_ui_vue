@@ -26,6 +26,9 @@ export default new Vuex.Store({
       maxWidth: 5000, //максимальная ширина/высота картинки
       widthErrorMessage: ``, //текст ошибки если значение ширины картинки не валидное
       heightErrorMessage: ``, //текст ошибки если значение высоты картинки не валидное
+      maxLengthText: 200, //максимальное количество символов для текста
+      isTextValid: true, //не обязательное поле
+      textErrorMessage: ``, //текст ошибки если введенный текст не валидный
     },
   },
   mutations: {
@@ -81,6 +84,10 @@ export default new Vuex.Store({
     setHeightErrorMessage(state, payload){
       state.options.heightErrorMessage = payload
     },
+    //сообщение о не корректном значении для текста
+    setTextErrorMessage(state, payload){
+      state.options.textErrorMessage = payload
+    },
     
   },
   actions: {
@@ -110,6 +117,17 @@ export default new Vuex.Store({
         value: result.isValid,
       })
       context.commit('setHeightErrorMessage', result.invalidMessage)
+    },
+    checkText(context, text){
+      context.commit('setText', text)
+      const maxLength = context.state.options.maxLengthText
+      const result = new Validation().validationText(text, {maxValue: maxLength})
+      
+      context.commit('setIsFieldValid', {
+        fieldName: 'isTextValid',
+        value: result.isValid,
+      })
+      context.commit('setTextErrorMessage', result.invalidMessage)
     },
   },
   modules: {
