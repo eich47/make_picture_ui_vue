@@ -90,11 +90,7 @@
       FormButtonSubmit, FormCheckbox, FormRadioButton, FormInputText, FormSelectColor, FormInputNumber},
     data(){
       return {
-        buttonSubmit: {
-            label: `Создать картинку`,
-            invalidMessage: `заполните обязательные поля`,
-            isValidData: true, //показать ли сообщение о необходимости заполнить поля
-        },
+
       }
     },
     computed: {
@@ -145,6 +141,13 @@
           isChecked: this.$store.state.options.texture,
         }
       },
+      buttonSubmit() {
+        return {
+          label: `Создать картинку`,
+          invalidMessage: `заполните обязательные поля`,
+          isValidData: this.$store.state.options.isValidAllData, //показать ли сообщение о необходимости заполнить поля
+        }
+      },
     },
     methods: {
       generateId(){
@@ -170,34 +173,7 @@
         this.$store.commit('setTexture', isSelected )
       },
       onSubmit(){
-        const isValid = this.isValidData(this.width, this.height, this.text)
-        this.$store.commit('setIsValidData', isValid)
-
-        if(isValid){
-          console.log('valid');
-          this.$store.commit('setIsUserSendForm', true)
-          this.$store.commit('setIsLoading', true)
-          this.$store.dispatch('loadImage')
-            .then(() => {
-              //если картинка успешно создана, сохраним ее параметры в localStore
-              return this.$store.dispatch('saveCurrentPictureOptions')
-            })
-            .catch((error) => {
-              console.log(`Error onload picture, src= ${error}`);
-            })
-            .finally( () =>{
-              this.$store.commit('setIsLoading', false)
-          })
-        } else {
-          console.log('no valid');
-          this.buttonSubmit.isValidData = false
-          setTimeout(() => {
-            this.buttonSubmit.isValidData = true
-          }, 2000)
-        }
-      },
-      isValidData(width, height, text){
-        return width.isValid && height.isValid && text.isValid
+        this.$store.dispatch('submitting')
       },
     },
 

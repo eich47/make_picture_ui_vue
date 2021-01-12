@@ -7,6 +7,7 @@ import Validator from "../util/Validator";
 import WidthIsCorrectValidation from "../util/validatorCases/WidthIsCorrectValidation";
 import WidthMaxValueValidation from "../util/validatorCases/WidthMaxValueValidation";
 import MaxLengthTextValidation from "../util/validatorCases/MaxLengthTextValidation";
+import FormDataValidation from "../util/validatorCases/FormDataValidation";
 
 Vue.use(Vuex)
 
@@ -23,7 +24,7 @@ export default new Vuex.Store({
       text: ``,
       extension: 'jpg',
       texture: false,
-      isValidAllData: false, //все ли параметры для картики корректны
+      isValidAllData: true, //все ли параметры для картики корректны
       isWidthValid: false, //обязательное поле
       isHeightValid: false, //обязательное поле
       maxWidth: 5000, //максимальная ширина/высота картинки
@@ -138,6 +139,44 @@ export default new Vuex.Store({
         value: result.isValid,
       })
       context.commit('setTextErrorMessage', result.invalidMessage)
+    },
+    submitting(context){
+      const result = new Validator([
+        new FormDataValidation(
+          context.state.options.isWidthValid,
+          context.state.options.isHeightValid,
+          context.state.options.isTextValid,
+        ),
+      ]).checking()
+      
+      context.commit('setIsValidData', result.isValid)
+      
+      //поменяем state чтобы скрыть сообщение об ошибке
+      if(result.isValid === false){
+        console.log('no valid');
+        setTimeout(()=>{
+          context.commit('setIsValidData', true)
+        }, 1000)
+      }
+      
+      if(result.isValid === true){
+        console.log('valid');
+        context.commit('setIsUserSendForm', true)
+        context.commit('setIsLoading', true)
+        context.dispatch('loadImage')
+          .then(() => {
+            //если картинка успешно создана, сохраним ее параметры в localStore
+            return context.dispatch('saveCurrentPictureOptions')
+          })
+          .catch((error) => {
+            console.log(`Error onload picture, src= ${error}`);
+          })
+          .finally( () =>{
+            context.commit('setIsLoading', false)
+          })
+      }
+      
+      
     },
   },
   modules: {
