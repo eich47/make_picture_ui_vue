@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import UrlMaker from "../util/UrlMaker";
 import picture from "./modules/picture";
 import lastPicture from "./modules/lastPicture";
+import Validation from "../util/Validation";
 
 Vue.use(Vuex)
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
       isWidthValid: false, //обязательное поле
       isHeightValid: false, //обязательное поле
       maxWidth: 5000, //максимальная ширина картинки
+      widthErrorMessage: ``, //текст ошибки если значение ширины картинки не валидное
     },
   },
   mutations: {
@@ -70,8 +72,25 @@ export default new Vuex.Store({
       const {fieldName, value} = payload
       state.options[fieldName] = value
     },
+    //сообщение о некорректном значении для ширины
+    setWidthErrorMessage(state, payload){
+      state.options.widthErrorMessage = payload
+    },
   },
   actions: {
+    checkWidth(context, width){
+      //добавим в state введнное пользователем значение
+      context.commit('setWidth', width)
+      //провалидируем введенное пользователем значение
+      const maxWidth = context.state.options.maxWidth
+      const result = new Validation().validationNumber(width, {maxValue: maxWidth})
+
+      context.commit('setIsFieldValid', {
+        fieldName: 'isWidthValid',
+        value: result.isValid,
+      })
+      context.commit('setWidthErrorMessage', result.invalidMessage)
+    },
   },
   modules: {
     picture,

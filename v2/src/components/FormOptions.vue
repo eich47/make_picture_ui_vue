@@ -102,7 +102,7 @@
         return {
             value: this.$store.state.options.width,
             isValid: this.$store.state.options.isWidthValid,
-            invalidMessage: ``,
+            invalidMessage: this.$store.state.options.widthErrorMessage,
             maxValue: this.$store.state.options.maxWidth,
         }
       },
@@ -151,22 +151,7 @@
         return (Math.random() * (9e9 - 1e9) + 1e9).toFixed(0)
       },
       onInputWidth(value){
-        //скроем ошибки
-        this.$store.commit('setIsFieldValid', {
-          fieldName: 'isWidthValid',
-          value: true,
-        })
-
-        this.$store.commit('setWidth', value)
-        value = Number(value)
-        const {isValid, invalidMessage} = this.validationNumber(value, this.width);
-        //запишем в store резьтат валидации
-        this.$store.commit('setIsFieldValid', {
-          fieldName: 'isWidthValid',
-          value: isValid,
-        })
-        this.width.invalidMessage = invalidMessage
-
+        this.$store.dispatch('checkWidth', value)
       },
       onInputHeight(value){
         this.$store.commit('setIsFieldValid', {
