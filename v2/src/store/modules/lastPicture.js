@@ -1,4 +1,5 @@
-import Storage from "../../util/Storage";
+import Storage2 from "../../util/Storage2";
+import LocalStorageClient from "../../util/storageCases/LocalStorageClient";
 
 const state = () => ({
   lastPictureList: [], //список опций картинок которые создавал пользователь
@@ -56,7 +57,7 @@ const actions = {
     currentOptions.id = ++lastId
     
     return new Promise((resolve, reject) => {
-      const result = new Storage(currentOptions).saveOptions()
+      const result = new Storage2(new LocalStorageClient()).saveOption(currentOptions)
       if (result){
         context.commit('saveCurrentPictureOptionsSuccess', true)
         context.commit('addCurrentOptionsToList', currentOptions)
@@ -69,7 +70,7 @@ const actions = {
   },
   loadSavedOptions(context){
     return new Promise(((resolve, reject) => {
-      const result = new Storage(null).getOption()
+      const result = new Storage2(new LocalStorageClient()).getOptions()
       if(result){
         context.commit('loadSavedOptionsSuccess', true)
         context.commit('addSavedOptionsToList', result)
@@ -83,7 +84,7 @@ const actions = {
   },
   deleteSelectedOptionsFromStorage(context, selectedOptions){
     return new Promise((resolve, reject) => {
-      const isSuccess = new Storage(selectedOptions).remove()
+      const isSuccess = new Storage2(new LocalStorageClient()).remove(selectedOptions)
       if (! isSuccess){
         context.commit('deleteSelectedOptionsFromStorageFailure', true)
         reject(`Ошибка при удалении ${selectedOptions} из localstorage`)
